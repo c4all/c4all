@@ -1,0 +1,39 @@
+{% load i18n %}
+
+<nav role="navigation" class="area-action page-action">
+
+{% if selected_site %}
+    {% url 'c4all_admin:get_threads' selected_site.id as thread_url %}
+{% else %}
+    {% url 'c4all_admin:get_threads' as thread_url %}
+{% endif %}
+
+
+    {% comment %}
+    <form id="bulk-action-form" method="post" action="{% url 'c4all_admin:user_bulk_actions' %}">{% csrf_token %}
+        <label for="id_action">{% trans "Action" %}:</label>
+            {{ bulk_action_form.action }}
+        <input id="bulk-action-submit"  type="submit" value="Submit">
+
+    </form>
+    {% endcomment %}
+
+
+    {% block hidden_objects_info %}
+    {% endblock %}
+
+    <!-- Filter select -->
+    <div class="filter-select">
+        <label for="id_interval" class="visually-hidden">{% trans "Select period" %}</label>
+            <form action="{{ thread_url }}" method="post">{% csrf_token %}
+                {{ interval_selection_form.interval }}
+                <button class="button button-small">
+                    <span class="button-label">{% trans "Filter" %}</span>
+                </button>
+            </form>
+    </div>
+    <!-- /Filter select -->
+
+    {% include "snippets/pagination.html" with objects=objects %}
+
+</nav>

@@ -1,0 +1,8 @@
+from .dev import *
+
+BASE_URL = ""
+BASE_STATIC = BASE_URL + STATIC_URL
+
+LANGUAGE_CODE = ''
+
+SPELLCHECK_ENABLED = False

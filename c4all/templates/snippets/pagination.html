@@ -1,0 +1,40 @@
+{% load i18n %}
+
+<!-- Pagination -->
+<div class="pagination">
+    <p class="label">{% trans "Total" %} {{ objects.paginator.count }} {{ pagination_objects_name }}</p>
+    <ul>
+        {% if objects.has_previous %}
+            <li class="first">
+                <a href="?page=1">
+                    <i class="icon icon-arrow-left-double" aria-hidden="true"></i>
+                    <span class="visually-hidden">{% trans "First" %}</span>
+                </a>
+            </li>
+            <li class="previous">
+                    <a href="?page={{ objects.previous_page_number }}">
+                        <i class="icon icon-arrow-left" aria-hidden="true"></i>
+                        <span class="visually-hidden">{% trans "previous"%}</span>
+                    </a>
+            </li>
+        {% endif %}
+        <li class="active">
+            <input type="text" value="{{ objects.number }}"> {% trans "of" %} {{ objects.paginator.num_pages }}
+        </li>
+        {% if objects.has_next %}
+            <li class="next">
+                    <a href="?page={{ objects.next_page_number }}">
+                        <i class="icon icon-arrow-right" aria-hidden="true"></i>
+                        <span class="visually-hidden">{% trans "Next" %}</span>
+                    </a>
+            </li>
+            <li class="last">
+                <a href="?page={{ objects.paginator.num_pages }}">
+                    <i class="icon icon-arrow-right-double" aria-hidden="true"></i>
+                    <span class="visually-hidden">{% trans "last" %}</span>
+                </a>
+            </li>
+        {% endif %}
+    </ul>
+</div>
+<!-- /Pagination -->

@@ -1,0 +1,172 @@
+{% extends 'custom_admin/base.html' %}
+{% load i18n %}
+
+{% block users_url %}
+    <li class="item-button is-active">
+        <a href="{% url 'c4all_admin:get_users' %}">{% trans "Users" %}</a>
+    </li>
+{% endblock %}
+
+{% block sec_nav %}
+
+    {% include "snippets/sec_nav_users.html" %}
+
+{% endblock %}
+
+
+{% block third_nav %}
+
+    {% include "snippets/sec_nav_users.html" %}
+
+{% endblock %}
+
+
+
+{% block page_title %}
+    <div class="page-title">
+        <h1>{% trans "Users" %}</h1>
+        <p>({% trans "showing" %} {{ users.start_index }}–{{ users.end_index }} {% trans "of" %} {{ users.paginator.count }})</p>
+    </div>
+{% endblock %}
+
+
+{% block content %}
+
+<!-- Main -->
+        <!-- Item listing -->
+            <div class="item-listing user-listing">
+
+                <div class="item item-header">
+                    <div class="col-user">
+                        <p>{% trans "User" %}</p>
+                    </div>
+                    <div class="col-email">
+                        <p>{% trans "E-mail" %}</p>
+                    </div>
+                    <div class="col-comments">
+                        <p><i class="icon icon-comment" aria-hidden="true"></i>{% trans "Comments" %}</p>
+                    </div>
+                    <div class="col-date">
+                        <p>{% trans "Date" %}</p>
+                    </div>
+                </div>
+                {% for user in users %}
+                <!-- Item -->
+                    <div class={% if forloop.counter|divisibleby:2 %}"item"{% else %}"item odd"{% endif %}>
+                        <div class="col-user has-checkbox">
+                            <label class="name">{{ user.get_full_name }}
+                                <input class="bulk-action-choices-checkbox" id="id_choices_{{ forloop.counter0 }}" type="checkbox" value="{{ user.id }}" name="choices">
+                            </label>
+                            <ul class="action-list">
+                                {% if not user.is_staff %}
+                                <li><a class="modify-user-anchor" href="" data-email={{ user.email }} data-name={{ user.get_full_name }} data-id={{ user.id }}>{% trans "Modify" %}</a></li>
+                                {% endif %}
+                                <li>
+                                    {% if user.hidden %}
+                                        <a href="" class='btn-hide unhidden' data-url={% url "c4all_admin:unhide_user" user.id %}>{% trans "Reveal" %}</a>
+                                        <a href="" class='btn-hide hidden' data-url={% url "c4all_admin:hide_user" user.id %} hidden>{% trans "Hide" %}</a>
+                                    {% else %}
+                                        <a href="" class='btn-hide unhidden' data-url={% url "c4all_admin:unhide_user" user.id %} hidden>{% trans "Reveal" %}</a>
+                                        <a href="" class='btn-hide hidden' data-url={% url "c4all_admin:hide_user" user.id %}>{% trans "Hide" %}</a>
+                                    {% endif %}
+                                </li>
+                                <li class="item-delete"><a href="{% url 'c4all_admin:delete_user' user.id %}">{% trans "Delete" %}</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-email">
+                            <p><a href="#">{{ user.email }}</a></p>
+                        </div>
+                        <div class="col-comments">
+                            <p><i class="icon icon-comment" aria-hidden="true"></i>{{ user.comments.count }}</p>
+                        </div>
+                        <div class="col-date">
+                            <p>{{ user.created|date:"Y-m-d" }}</p>
+                        </div>
+                    </div>
+                    <!-- /Item -->
+                    <!-- Item: Edit -->
+                    <div class="item-edit-div" data-user_id={{ user.id }}></div>
+                    <!-- /Item: Edit -->
+                {% endfor %}
+            </div>
+            <!-- /Item listing -->
+
+
+{% endblock %}
+
+{% block js %}
+
+
+<script type="text/javascript">
+
+    $(".bulk-action-submit").on('click', function(){
+        var checked = $(".bulk-action-choices-checkbox:checked")
+        var form = $(this).context.form;
+
+        for (var i=0; i < checked.length; i++){
+            var el = checked[i];
+            el.type = "hidden";
+            form.appendChild(el);
+        }
+
+        form.submit();
+
+        return false;
+    });
+
+    $(".modify-user-anchor").on('click', function(){
+        var userEmail = $(this).data("email");
+        var userName = $(this).data("name");
+        var userId = $(this).data("id");
+
+        // get password change container
+        var container = $(".item-edit-div[data-user_id='" + userId + "']")
+
+        // if item-edit already in container, remove it and do nothing
+        if (container.find("div.item.item-edit").length > 0){
+            container.find("div.item.item-edit").remove();
+        }
+        else{
+            // else make get request for change password template
+            var editDivElement = $(".item-edit-div[data-user_id='" + userId + "']");
+            var url = "/admin/user/" + userId + "/change_password";
+
+            $.get(url, function(msg) {
+                editDivElement.html(msg['html']);
+            });
+        }
+
+        return false;
+    });
+
+
+    $(".item-edit-div").on("submit", ".change-password-form", function(){
+        var form = $(this);
+        var url = form.context.action;
+
+        // rendered password change form has set csrf token
+        // so there is no need for us to set it here
+        $.ajax(url,{
+            data: form.serialize(),
+            type: "POST",
+        }).done(function(msg) {
+            var editDivElement = $(".item-edit-div[data-user_id='" + msg['user_id'] + "']");
+            editDivElement.html(msg['html']);
+        });
+
+        return false;
+    });
+
+    $(".item-edit-div").on("click", ".cancel-password-change", function(){
+        var userId = $(this).data('user_id');
+        var container = $(".item-edit-div[data-user_id='" + userId + "']");
+        container.find("div.item.item-edit").remove();
+        return false;
+    });
+
+</script>
+
+
+{% include "snippets/hide_unhide_js.html" only %}
+
+{% endblock %}

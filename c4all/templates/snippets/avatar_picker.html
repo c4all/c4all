@@ -1,0 +1,99 @@
+{% load i18n %}
+<div class="other-avatar" id="c4all_avatar_selection_box">
+    <button class="button naked {% if user.avatar_num == 1 or not user.is_authenticated %}state-active{% endif %}" title="{% trans "Blue" %} {% trans "circle" %}">
+        <img alt="{% trans "Blue" %} {% trans "circle" %}" src="{{ BASE_STATIC }}assets/avatar/01.png" data-num="1">
+        <span class="button-label">{% trans "Blue" %} {% trans "circle" %}</span>
+    </button>
+    <button class="button naked {% if user.avatar_num == 2 %}state-active{% endif %}" title="{% trans "Green" %} {% trans "circle" %}">
+        <img alt="{% trans "Green" %} {% trans "circle" %}" src="{{ BASE_STATIC }}assets/avatar/02.png" data-num="2">
+        <span class="button-label">{% trans "Green" %} {% trans "circle" %}</span>
+    </button>
+    <button class="button naked {% if user.avatar_num == 3 %}state-active{% endif %}" title="{% trans "Yellow" %} {% trans "circle" %}">
+        <img alt="{% trans "Yellow" %} {% trans "circle" %}" src="{{ BASE_STATIC }}assets/avatar/03.png" data-num="3">
+        <span class="button-label">{% trans "Yellow" %} {% trans "circle" %}</span>
+    </button>
+    <button class="button naked {% if user.avatar_num == 4 %}state-active{% endif %}" title="{% trans "Pink" %} {% trans "circle" %}">
+        <img alt="{% trans "Pink" %} {% trans "circle" %}" src="{{ BASE_STATIC }}assets/avatar/04.png" data-num="4">
+        <span class="button-label">{% trans "Pink" %} {% trans "circle" %}</span>
+    </button>
+    <button class="button naked {% if user.avatar_num == 5 %}state-active{% endif %}" title="{% trans "Blue" %} {% trans "star" %}">
+        <img alt="{% trans "Blue" %} {% trans "star" %}" src="{{ BASE_STATIC }}assets/avatar/05.png" data-num="5">
+        <span class="button-label">{% trans "Blue" %} {% trans "star" %}</span>
+    </button>
+    <button class="button naked {% if user.avatar_num == 6 %}state-active{% endif %}" title="{% trans "Green" %} {% trans "star" %}">
+        <img alt="{% trans "Green" %} {% trans "star" %}" src="{{ BASE_STATIC }}assets/avatar/06.png" data-num="6">
+        <span class="button-label">{% trans "Green" %} {% trans "star" %}</span>
+    </button>
+    <button class="button naked {% if user.avatar_num == 7 %}state-active{% endif %}" title="{% trans "Yellow" %} {% trans "star" %}">
+        <img alt="{% trans "Yellow" %} {% trans "star" %}" src="{{ BASE_STATIC }}assets/avatar/07.png" data-num="7">
+        <span class="button-label">{% trans "Yellow" %} {% trans "star" %}</span>
+    </button>
+    <button class="button naked {% if user.avatar_num == 8 %}state-active{% endif %}" title="{% trans "Pink" %} {% trans "star" %}">
+        <img alt="{% trans "Pink" %} {% trans "star" %}" src="{{ BASE_STATIC }}assets/avatar/08.png" data-num="8">
+        <span class="button-label">{% trans "Pink" %} {% trans "star" %}</span>
+    </button>
+    <button class="button naked {% if user.avatar_num == 9 %}state-active{% endif %}" title="{% trans "Blue" %} {% trans "dot" %}">
+        <img alt="{% trans "Blue" %} {% trans "dot" %}" src="{{ BASE_STATIC }}assets/avatar/09.png" data-num="9">
+        <span class="button-label">{% trans "Blue" %} {% trans "dot" %}</span>
+    </button>
+    <button class="button naked {% if user.avatar_num == 10 %}state-active{% endif %}" title="{% trans "Green" %} {% trans "dot" %}">
+        <img alt="{% trans "Green" %} {% trans "dot" %}" src="{{ BASE_STATIC }}assets/avatar/10.png" data-num="10">
+        <span class="button-label">{% trans "Green" %} {% trans "dot" %}</span>
+    </button>
+    <button class="button naked {% if user.avatar_num == 11 %}state-active{% endif %}" title="{% trans "Yellow" %} {% trans "dot" %}">
+        <img alt="{% trans "Yellow" %} {% trans "dot" %}" src="{{ BASE_STATIC }}assets/avatar/11.png" data-num="11">
+        <span class="button-label">{% trans "Yellow" %} {% trans "dot" %}</span>
+    </button>
+    <button class="button naked {% if user.avatar_num == 12 %}state-active{% endif %}" title="{% trans "Pink" %} {% trans "dot" %}">
+        <img alt="{% trans "Pink" %} {% trans "dot" %}" src="{{ BASE_STATIC }}assets/avatar/12.png" data-num="12">
+        <span class="button-label">{% trans "Pink" %} {% trans "dot" %}</span>
+    </button>
+    <button class="button naked {% if user.avatar_num == 13 %}state-active{% endif %}" title="{% trans "Blue" %} {% trans "drop" %}">
+        <img alt="{% trans "Blue" %} {% trans "drop" %}" src="{{ BASE_STATIC }}assets/avatar/13.png" data-num="13">
+        <span class="button-label">{% trans "Blue" %} {% trans "drop" %}</span>
+    </button>
+    <button class="button naked {% if user.avatar_num == 14 %}state-active{% endif %}" title="{% trans "Green" %} {% trans "drop" %}">
+        <img alt="{% trans "Green" %} {% trans "drop" %}" src="{{ BASE_STATIC }}assets/avatar/14.png" data-num="14">
+        <span class="button-label">{% trans "Green" %} {% trans "drop" %}</span>
+    </button>
+    <button class="button naked {% if user.avatar_num == 15 %}state-active{% endif %}" title="{% trans "Yellow" %} {% trans "drop" %}">
+        <img alt="{% trans "Yellow" %} {% trans "drop" %}" src="{{ BASE_STATIC }}assets/avatar/15.png" data-num="15">
+        <span class="button-label">{% trans "Yellow" %} {% trans "drop" %}</span>
+    </button>
+    <button class="button naked {% if user.avatar_num == 16 %}state-active{% endif %}" title="{% trans "Pink" %} {% trans "drop" %}">
+        <img alt="{% trans "Pink" %} {% trans "drop" %}" src="{{ BASE_STATIC }}assets/avatar/16.png" data-num="16">
+        <span class="button-label">{% trans "Pink" %} {% trans "drop" %}</span>
+    </button>
+    <button class="button naked {% if user.avatar_num == 17 %}state-active{% endif %}" title="{% trans "Blue" %} {% trans "leaf" %}">
+        <img alt="{% trans "Blue" %} {% trans "leaf" %}" src="{{ BASE_STATIC }}assets/avatar/17.png" data-num="17">
+        <span class="button-label">{% trans "Blue" %} {% trans "leaf" %}</span>
+    </button>
+    <button class="button naked {% if user.avatar_num == 18 %}state-active{% endif %}" title="{% trans "Green" %} {% trans "leaf" %}">
+        <img alt="{% trans "Green" %} {% trans "leaf" %}" src="{{ BASE_STATIC }}assets/avatar/18.png" data-num="18">
+        <span class="button-label">{% trans "Green" %} {% trans "leaf" %}</span>
+    </button>
+    <button class="button naked {% if user.avatar_num == 19 %}state-active{% endif %}" title="{% trans "Yellow" %} {% trans "leaf" %}">
+        <img alt="{% trans "Yellow" %} {% trans "leaf" %}" src="{{ BASE_STATIC }}assets/avatar/19.png" data-num="19">
+        <span class="button-label">{% trans "Yellow" %} {% trans "leaf" %}</span>
+    </button>
+    <button class="button naked {% if user.avatar_num == 20 %}state-active{% endif %}" title="{% trans "Pink" %} {% trans "leaf" %}">
+        <img alt="{% trans "Pink" %} {% trans "leaf" %}" src="{{ BASE_STATIC }}assets/avatar/20.png" data-num="20">
+        <span class="button-label">{% trans "Pink" %} {% trans "leaf" %}</span>
+    </button>
+    <button class="button naked {% if user.avatar_num == 21 %}state-active{% endif %}" title="{% trans "Blue" %} {% trans "flower" %}">
+        <img alt="{% trans "Blue" %} {% trans "flower" %}" src="{{ BASE_STATIC }}assets/avatar/21.png" data-num="21">
+        <span class="button-label">{% trans "Blue" %} {% trans "flower" %}</span>
+    </button>
+    <button class="button naked {% if user.avatar_num == 22 %}state-active{% endif %}" title="{% trans "Green" %} {% trans "flower" %}">
+        <img alt="{% trans "Green" %} {% trans "flower" %}" src="{{ BASE_STATIC }}assets/avatar/22.png" data-num="22">
+        <span class="button-label">{% trans "Green" %} {% trans "flower" %}</span>
+    </button>
+    <button class="button naked {% if user.avatar_num == 23 %}state-active{% endif %}" title="{% trans "Yellow" %} {% trans "flower" %}">
+        <img alt="{% trans "Yellow" %} {% trans "flower" %}" src="{{ BASE_STATIC }}assets/avatar/23.png" data-num="23">
+        <span class="button-label">{% trans "Yellow" %} {% trans "flower" %}</span>
+    </button>
+    <button class="button naked {% if user.avatar_num == 24 %}state-active{% endif %}" title="{% trans "Pink" %} {% trans "flower" %}">
+        <img alt="{% trans "Pink" %} {% trans "flower" %}" src="{{ BASE_STATIC }}assets/avatar/24.png" data-num="24">
+        <span class="button-label">{% trans "Pink" %} {% trans "flower" %}</span>
+    </button>
+</div>

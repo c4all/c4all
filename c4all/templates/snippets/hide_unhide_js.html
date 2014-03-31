@@ -1,0 +1,24 @@
+<script type="text/javascript">
+
+    $(".btn-hide").on( "click", function() {
+        url = $(this).data('url');
+        el = $(this);
+
+        if (url){
+            makeAjaxCall(url).done(function( msg ) {
+                if (msg["state"] == "hidden"){
+                    el.closest("ul").find(".btn-hide.unhidden").show()
+                    el.hide();
+                }
+                else {
+                    el.closest("ul").find(".btn-hide.hidden").show()
+                    el.hide();
+                }
+            }).fail(function(msg) {
+            });
+        }
+
+        return false;
+    });
+
+</script>

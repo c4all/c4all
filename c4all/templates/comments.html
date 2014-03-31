@@ -1,0 +1,124 @@
+{% load i18n %}
+{% load custom_filters %}
+
+<!-- Comment list -->
+<div class="comment-list">
+
+
+  <h2 class="title">{% if request.user.is_staff %}{{ comments.count }}{% else %}{{ comments|visible_comments_count }}{% endif %} {% if comments.count == 1 %}{% trans "comment" %}{% else %}{% trans "comments" %}{% endif %}</h2>
+
+
+  <div class="action-list">
+      {% if not request.user.is_staff %}
+
+        {% if not all_comments and comments|visible_comments_count > WIDGET_COMMENTS_DEFAULT_NUMBER %}
+          <div class="user-action">
+            <a id="btn-viev-all-comments"  href="#"><i class="icon icon-arrow-right"></i>{% trans "View all comments" %}</a>
+          </div>
+        {% endif %}
+      {% else %}
+        {% if not all_comments and comments.count > WIDGET_COMMENTS_DEFAULT_NUMBER %}
+          <div class="user-action">
+            <a id="btn-viev-all-comments"  href="#"><i class="icon icon-arrow-right"></i>{% trans "View all comments" %}</a>
+          </div>
+        {% endif %}
+      {% endif %}
+
+        {% if request.user.is_staff %}
+
+        <div class="editor-action">
+          <span class="button-description">{% trans "Tools" %}</span>
+          <a id="anchor-admin" href="{{ BASE_URL }}{% url 'c4all_admin:login_admin' %}" target="_blank">
+            <button class="button button-small flat button-no-action">
+              <span class="button-label">{% trans "Go to editor interface" %}</span>
+            </button>
+          </a>
+        </div>
+
+        {% endif %}
+
+    </div>
+
+
+  <ol>
+    {% for comment in comments|comment_number_filter:all_comments %}
+
+      <!-- Comment -->
+
+      {% if request.user.is_staff or not comment.hidden and not comment.user.hidden %}
+
+          {% if comment.id in posted_comments %}
+            <li class="comment my-comment comment-list-item" data-comment-id="{{ comment.id }}">
+          {% elif forloop.last %}
+            <li class="comment last-comment comment-list-item" data-comment-id="{{ comment.id }}">
+          {% else %}
+            <li class="comment comment-list-item" data-comment-id="{{ comment.id }}">
+          {% endif %}
+
+          <article>
+
+          <header class="comment-header">
+              {% if comment.id == last_posted_comment_id %}
+                <span class="tag">{% trans "My comment" %}</span>
+              {% elif forloop.last %}
+                <span class="tag">{% trans "Last comment" %}</span>
+              {% endif %}
+
+              <h3 class="name">{{ comment.poster_name }}</h3>
+              <img class="avatar" src="{{ BASE_STATIC }}assets/avatar/{{ comment.get_avatar }}.png">
+          </header>
+
+          <div class="comment-body" id="comment-{{ comment.id }}">
+              <!--RSPEAK_START--><p>{{ comment.text|safe }}</p><!--RSPEAK_STOP-->
+          </div>
+
+
+          <footer class="comment-footer">
+              <time class="date" datetime="{{ comment.created|date:"Y-m-d H:i" }}"><strong>{% trans "at" %} {{ comment.created|time:"H:i" }}</strong> {{ comment.created|date:"d F Y" }}</time>
+              <div class="action-vote">
+                  {% include "like_snippet.html" with instance=comment %}
+                  {% include "dislike_snippet.html" with instance=comment %}
+              </div>
+              <div class="action-other">
+                {% if rs_customer_id %}
+                <a class="ttl-action" href="" data-comment-id="comment-{{ comment.id }}" data-customer-id="{{ rs_customer_id }}">
+                {% endif %}
+                  <button class="button button-small listen button-no-action">
+                      <i class="icon icon-listen"></i>
+                      <span class="button-label">{% trans "Listen to comment" %}</span>
+                  </button>
+                  <div class="rs_skip rs_preserve element-hidden" id="player-comment-{{ comment.id }}"></div>
+                {% if rs_customer_id %}
+                </a>
+                {% endif %}
+              </div>
+          </footer>
+
+          {% if request.user.is_staff %}
+          <div class="comment-edit">
+              <span class="button-description">{% trans "Tools" %}</span>
+              {% if comment.hidden %}
+              <button class="button button-small flat ctrl-comment-feedback" data-action="unhide">
+                  <span class="button-label hide-comment-button">{% trans "Publish comment" %}</span>
+              </button>
+              {% else %}
+              <button class="button button-small flat ctrl-comment-feedback" data-action="hide">
+                  <span class="button-label hide-comment-button">{% trans "Unpublish comment" %}</span>
+              </button>
+              {% endif %}
+          </div>
+          {% endif %}
+
+
+        </article>
+
+        </li>
+
+      {% endif %}
+
+
+    {% endfor %}
+
+  </ol>
+</div>
+<!-- /Comment list -->

@@ -1,0 +1,8 @@
+{% load i18n %}
+<div class="button-container">
+    <button class="button button-small thumb-down {% if comment.id in request.session.disliked_comments %}state-active{% endif %} alt-hover ctrl-comment-feedback" data-action="dislike">
+        <i class="icon icon-thumb-down"></i>
+        <span class="button-label">{% trans "Bad" %}</span>
+    </button>
+    <span class="button-description"><span class="value">{% trans "voted" %} {{ instance.dislikes_count }}</span> <span class="extra">{% if instance.dislikes_count == 1 %}{% trans "person" %}{% else %}{% trans "persons" %}{% endif %}</span></span>
+</div>

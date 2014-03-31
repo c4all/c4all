@@ -1,0 +1,7 @@
+{% autoescape on %}
+
+<script>
+    window.parent.postMessage(JSON.stringify({{ data|safe }}), "*");
+</script>
+
+{% endautoescape %}

@@ -1,0 +1,35 @@
+{% load i18n %}
+
+<nav role="navigation" class="area-action page-action">
+
+    {% if selected_site %}
+        {% url 'c4all_admin:get_threads' selected_site.id as thread_url %}
+    {% else %}
+        {% url 'c4all_admin:get_threads' as thread_url %}
+    {% endif %}
+
+        <!-- Filter tab -->
+        <div class="filter-links">
+            <p>{% trans "Show" %}:</p>
+            <ul>
+                <li class="is-active"><a href="{% url 'c4all_admin:get_users' %}">{% trans "ALL" %}</a></li>
+                <li><a href="{% url 'c4all_admin:get_users' %}?hidden=True">{% trans "Hidden" %} ({{ hidden_users_count }})</a></li>
+            </ul>
+        </div>
+        <!-- /Filter tab -->
+
+        <div class="page_info"></div>
+
+
+        <div class="filter-select">
+            <form class="bulk-action-form" id="bulk-action-form" method="post" action="{% url 'c4all_admin:user_bulk_actions' %}">{% csrf_token %}
+                    {{ bulk_action_form.action }}
+                <button class="button button-small bulk-action-submit">
+                    <span class="button-label">{% trans "Commit" %}</span>
+                </button>
+            </form>
+        </div>
+
+        {% include "snippets/pagination.html" with objects=users %}
+
+</nav>

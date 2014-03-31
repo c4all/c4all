@@ -1,0 +1,285 @@
+{% load i18n %}
+{% load user_avatar %}
+<div class="leave-comment">
+  <h2 class="title">{% trans "Comment" %}</h2>
+
+  <div class="help">
+    <div class="action">
+        <a class="button-description popup-with-zoom-anim" href="#c4all-rules">{% trans "What you can write" %}</a>
+        <a class="button popup-with-zoom-anim" href="#c4all-rules" title="{% trans "Read rules" %}">
+            <i class="icon icon-ll"></i>
+            <span class="button-label">{% trans "Read rules" %}</span>
+        </a>
+        <a class="button popup-with-zoom-anim" href="#c4all-rules-video" title="{% trans "See video with rules" %}">
+            <i class="icon icon-sign-language"></i>
+            <span class="button-label">{% trans "See video with rules" %}</span>
+        </a>
+    </div>
+  </div>
+
+  <div class="zoom-anim-dialog mfp-hide c4all-modal" id="c4all-rules">
+
+        <h1>{% trans "What you can write" %}</h1>
+        {% blocktrans %}
+        <p>You can write what you think.<br>
+        But you can't write mean things<br>
+        about other people.<br>
+        You may not write that some people<br>
+        are worse than others.<br>
+        Then we will remove what you have written.<br>
+        Everyone should feel free<br>
+        to write what they think about our news.</p>
+
+        <p>Everyone can read what you write.<br>
+        Think carefully about what you want it to say.<br>
+        You don't have to write your real name.<br>
+        But you may not pretend to be someone else<br>
+        who exists.</p>
+
+        <p>You don't have to write words.<br>
+        You can also click one of the pictures<br>
+        that show different feelings.</p>
+        {% endblocktrans %}
+
+  </div>
+
+  <div class="zoom-anim-dialog c4all-modal c4all-modal-video mfp-hide" id="c4all-rules-video">
+
+        <h1>{% trans "What you can write" %}</h1>
+        <div class="flex-video widescreen vimeo">
+          <iframe src="//player.vimeo.com/video/87162437" width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+        </div>
+
+  </div>
+
+<div class="comment-form">
+<!-- Comment area -->
+<fieldset class="comment-area">
+
+    <div class="comment-editor">
+
+        <div class="action-feel">
+            <h3 class="button-description">{% trans "Write" %}</h3>
+            <button class="button toolbar-action" title="{% trans "Like" %}">
+                <img class="icon icon-heart comment-icon" src="{{ BASE_STATIC }}assets/art/transparent.png" alt="{% trans "Like" %}">
+                <span class="button-label">{% trans "Like" %}</span>
+            </button>
+            <button class="button toolbar-action" title="{% trans "Happy" %}">
+                <img class="icon icon-smiley-laughing comment-icon" src="{{ BASE_STATIC }}assets/art/transparent.png" alt="{% trans "Happy" %}">
+                <span class="button-label">{% trans "Happy" %}</span>
+            </button>
+            <button class="button toolbar-action" title="{% trans "Satisfied" %}">
+                <img class="icon icon-smiley-happy comment-icon" src="{{ BASE_STATIC }}assets/art/transparent.png" alt="{% trans "Satisfied" %}">
+                <span class="button-label">{% trans "Satisfied" %}</span>
+            </button>
+            <button class="button toolbar-action" title="{% trans "Don't care" %}">
+                <img class="icon icon-smiley-indifferent comment-icon" src="{{ BASE_STATIC }}assets/art/transparent.png" alt="{% trans "Don't care" %}">
+                <span class="button-label">{% trans "Don't care" %}</span>
+            </button>
+            <button class="button toolbar-action" title="{% trans "Cranky" %}">
+                <img class="icon icon-smiley-sad comment-icon" src="{{ BASE_STATIC }}assets/art/transparent.png" alt="{% trans "Cranky" %}">
+                <span class="button-label">{% trans "Cranky" %}</span>
+            </button>
+            <button class="button toolbar-action" title="{% trans "Angry" %}">
+                <img class="icon icon-smiley-angry comment-icon" src="{{ BASE_STATIC }}assets/art/transparent.png" alt="{% trans "Angry" %}">
+                <span class="button-label">{% trans "Angry" %}</span>
+            </button>
+        </div>
+
+
+        <div class="action-help">
+          <h3 class="button-description">{% trans "Help" %}</h3>
+          <button id="button-spellcheck" class="button" title="{% trans "Spell check" %}">
+              <i class="icon icon-spellcheck"></i>
+              <span class="button-label">{% trans "Spell check" %}</span>
+          </button>
+          <button class="button" id="ttl-text-editor-btn" data-customer-id="{{ rs_customer_id }}" title="{% trans "Listen" %}">
+              <i class="icon icon-listen"></i>
+              <span class="button-label">{% trans "Listen" %}</span>
+          </button>
+          <div class="rs_skip rs_preserve element-hidden" id="player-content-editable"></div>
+        </div>
+    </div>
+
+      <div class="field field-comment">
+          <label for="input-textarea">{% trans "Enter comment" %}</label>
+          <div id="comment-input-ceditable" contenteditable="true" class="textarea"></div>
+      </div>
+
+</fieldset>
+<!-- /Comment area -->
+
+
+{% if not user.is_authenticated %}
+
+  {% if site.anonymous_allowed %}
+
+  <!-- Account area: Anonymus -->
+  <fieldset class="account-area pull-left anonymus">
+
+      <div class="account-info">
+      </div>
+
+      <div class="field-group label-left">
+          <div class="field field-avatar">
+              <button id="c4all_select_avatar" class="active-avatar naked" title="{% trans "Choose a picture" %}">
+                  <img id="avatar" alt="Blue circle" src="{{ BASE_STATIC }}assets/avatar/01.png">
+                  <span class="button-label">{% trans "Choose a picture" %}</span>
+              </button>
+
+              {% include "snippets/avatar_picker.html" %}
+
+          </div>
+
+          <div class="field">
+              <label for="display-name">{% trans "Name" %}</label>
+              <div class="group">
+                  <input type="text" id="display-name" maxlength="40">
+              </div>
+          </div>
+          <div class="field field-action">
+              <button class="alt" id="c4all_send_comment_button">
+                  <span class="button-label">{% trans "Send" %}</span>
+              </button>
+          </div>
+      </div>
+
+  </fieldset>
+  <!-- /Account area: Anonymus -->
+
+  {% else %}
+
+<!-- Account area: Signup -->
+<fieldset class="account-area pull-left signup" id="signup-container">
+
+    <div class="account-info">
+        <h3>{% trans "Sign up" %}</h3>
+        <a id="login-switch" href="#" class="action-link"><i class="icon icon-arrow-right-alt"></i>{% trans "Or, Log in" %}</a>
+        <p>{% trans "If you register, you can keep the same display name each time you comment." %}</p>
+    </div>
+
+    <div class="field-group label-left login-register-box register-box">
+        <div class="field field-avatar">
+
+            <button id="c4all_select_avatar" class="active-avatar naked" title="{% trans "Choose a picture" %}">
+                <img id="avatar" src="{{ BASE_STATIC }}assets/avatar/01.png">
+                <span class="button-label">{% trans "Choose a picture" %}</span>
+            </button>
+
+            {% include "snippets/avatar_picker.html" %}
+
+        </div>
+        <div class="field">
+            <label for="display-full_name">{% trans "Name" %}</label>
+            <div class="group">
+                <input type="text" id="display-full_name" name="full_name">
+            </div>
+        </div>
+        <div class="field">
+            <label for="c4all-email">{% trans "E-mail" %}</label>
+            <div class="group">
+                <input type="text" id="c4all-email" name="email">
+            </div>
+        </div>
+        <div class="field">
+            <label for="c4all-password">{% trans "Password" %}</label>
+            <div class="group">
+                <input type="password" id="c4all-password" name="password">
+            </div>
+        </div>
+        <div class="field">
+            <label for="c4all-password2">{% trans "Repeat" %}</label>
+            <div class="group">
+                <input type="password" id="c4all-password2" name="password2">
+            </div>
+        </div>
+        <div class="field field-action">
+            <button class="alt" id="c4all_register_button">
+                <span class="button-label">{% trans "Register and send comment" %}</span>
+            </button>
+        </div>
+        <div class="field field-action">
+            <a class="action-link c4all_cancel_login" href="#"><i class="icon icon-arrow-right-alt"></i>{% trans "Cancel" %}</a>
+        </div>
+    </div>
+
+</fieldset>
+<!-- /Account area: Signup -->
+
+
+<!-- Account area: Log in -->
+<fieldset class="account-area login visually-hidden" id="login-container">
+
+    <div class="account-info">
+        <h3>{% trans "Log in" %}</h3>
+        <a id="signup-switch" href="#" class="action-link"><i class="icon icon-arrow-right-alt"></i>{% trans "Or, Sign up" %}</a>
+    </div>
+
+    <div class="field-group label-left login-register-box login-box">
+        <div class="field">
+            <label for="c4all-email">{% trans "E-mail" %}</label>
+            <div class="group">
+                <input type="text" id="c4all-email" name="email">
+            </div>
+        </div>
+        <div class="field">
+            <label for="c4all-password">{% trans "Password" %}</label>
+            <div class="group">
+                <input type="password" id="c4all-password" name="password">
+            </div>
+        </div>
+        <div class="field field-action">
+            <button class="alt" id="c4all_login_button">
+                <span class="button-label">{% trans "Log in" %}</span>
+            </button>
+        </div>
+        <div class="field field-action">
+            <a class="action-link c4all_cancel_login" href="#" ><i class="icon icon-arrow-right-alt"></i>{% trans "Cancel" %}</a>
+        </div>
+    </div>
+
+</fieldset>
+<!-- /Account area: Log in -->
+
+
+
+  {% endif %}
+
+
+{% else %}
+
+  <!-- Account area: Logged in -->
+  <fieldset class="account-area pull-left loggedin">
+
+      <div class="account-info">
+          <h3>{% trans "You are logged in as" %} {{ user.get_full_name }}</h3>
+      </div>
+
+      <div class="field-group">
+        <div class="field field-avatar">
+          <button id="c4all_select_avatar" class="active-avatar naked">
+              <img id="avatar" src="{{ BASE_STATIC }}assets/avatar/{{user.avatar_num|stringformat:"02i"}}.png">
+          </button>
+
+            {% include "snippets/avatar_picker.html" %}
+
+        </div>
+
+        <div class="field field-action primary">
+            <button class="alt" id="c4all_send_comment_button">
+                <span class="button-label">{% trans "Send" %}</span>
+            </button>
+        </div>
+        <div class="field field-action secondary">
+            <a class="action-link" href="#" id="c4all_logout"><i class="icon icon-arrow-right-alt"></i>{% trans "Logout" %}</a>
+        </div>
+      </div>
+
+  </fieldset>
+    <!-- /Account area: Logged in -->
+
+{% endif %}
+
+</div>
+
+</div>

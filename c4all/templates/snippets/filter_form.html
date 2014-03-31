@@ -1,0 +1,31 @@
+{% load i18n %}
+
+<form id="object-filter-form">
+    <select id="object-selector">
+    {% if not selected_option %}
+        <option selected disabled>{% trans "Choose a site" %}</option>
+    {% endif %}
+    {% for object in objects %}
+        {% if selected_option and object.id == selected_option.id %}
+            <option value="{% url options_url_name object.id %}" selected>{{ object.domain }}</option>
+        {% else %}
+            <option value="{% url options_url_name object.id %}" >{{ object.domain }}</option>
+        {% endif %}
+    {% endfor %}
+    </select>
+</form>
+
+
+{% block js %}
+    <script type="text/javascript">
+
+        $("#object-selector").change(function() {
+            var form = $(this).context.form;
+            var option_url = $(this).children("option").filter(":selected").val();
+
+            form.action = option_url;
+            form.submit();
+        });
+
+    </script>
+{% endblock %}

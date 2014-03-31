@@ -1,0 +1,33 @@
+{% load i18n %}
+
+<!-- Comment intro -->
+<div class="comment-intro">
+
+    <div class="action-comment">
+      <button class="button alt" id="make-comment-link">
+          <i class="icon icon-comment"></i>
+          <span class="button-label">{% trans "Write" %} <span class="extra">{% trans "something about this article" %}</span></span>
+      </button>
+  </div>
+
+  <h2>{% trans "What do you think about this article?" %}</h2>
+
+  <div class="action-vote">
+    <div class="button-container">
+        <button id="c4all_like_thread_button" class="button thumb-up alt-hover {% if thread.id in request.session.liked_threads %}state-active{% endif %}">
+            <i class="icon icon-thumb-up"></i>
+            <span class="button-label">{% trans "Good" %}</span>
+        </button>
+        <span class="button-description"><span class="value">{% trans "voted" %} {{ thread.likes_count }}</span> <span class="extra">{% if thread.likes_count == 1 %}{% trans "person" %}{% else %}{% trans "persons" %}{% endif %}</span></span>
+    </div>
+    <div class="button-container">
+        <button id="c4all_dislike_thread_button" class="button thumb-down alt-hover {% if thread.id in request.session.disliked_threads %}state-active{% endif %}">
+            <i class="icon icon-thumb-down"></i>
+            <span class="button-label">{% trans "Bad" %}</span>
+        </button>
+        <span class="button-description"><span class="value">{% trans "voted" %} {{ thread.dislikes_count }}</span> <span class="extra">{% if thread.dislikes_count == 1 %}{% trans "person" %}{% else %}{% trans "persons" %}{% endif %}</span></span>
+    </div>
+  </div>
+
+</div>
+<!-- /Comment intro -->

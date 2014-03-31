@@ -1,0 +1,139 @@
+/* ==================================================
+    Mixins
+===================================================== */
+
+// Border radius
+.rounded (@radius:5px) {
+    -webkit-border-radius:  @radius;
+    -moz-border-radius:     @radius;
+    border-radius:          @radius;
+}
+.border-radius (@topleft: 5px, @topright: 5px, @bottomright: 5px, @bottomleft: 5px) {
+	-webkit-border-radius: @topleft @topright @bottomright @bottomleft;
+	-moz-border-radius: @topleft @topright @bottomright @bottomleft;
+	border-radius: @topleft @topright @bottomright @bottomleft;
+}
+.border-radius-none () {
+    -webkit-border-radius:  0;
+    -moz-border-radius:     0;
+    border-radius:          0;
+}
+
+// Box shadow
+.box-shadow (@shadowx, @shadowy, @shadowblur, @shadowcolor) {
+    -moz-box-shadow:    @arguments;
+    -webkit-box-shadow: @arguments;
+    box-shadow:         @arguments;
+}
+.box-shadow-inset (@inset, @shadowx, @shadowy, @shadowblur, @shadowcolor) {
+    -moz-box-shadow:    @arguments;
+    -webkit-box-shadow: @arguments;
+    box-shadow:         @arguments;
+}
+.box-shadow-none () {
+    -moz-box-shadow:    none;
+    -webkit-box-shadow: none;
+    box-shadow:         none;
+}
+
+// Opacity gradient (origin, alpha)
+.opacity-gradient (@origin: left, @alpha: 0.2) {
+    background-image: -webkit-linear-gradient(@origin, rgba(0,0,0,0.0), rgba(0,0,0,@alpha));
+    background-image: -moz-linear-gradient(@origin, rgba(0,0,0,0.0), rgba(0,0,0,@alpha));
+    background-image: -o-linear-gradient(@origin, rgba(0,0,0,0.0), rgba(0,0,0,@alpha));
+    background-image: -ms-linear-gradient(@origin, rgba(0,0,0,0.0), rgba(0,0,0,@alpha));
+    background-image: linear-gradient(@origin, rgba(0,0,0,0.0), rgba(0,0,0,@alpha));
+}
+.opacity-gradient-light (@origin: left, @alpha: 0.2) {
+    background-image: -webkit-linear-gradient(@origin, rgba(255,255,255,0.0), rgba(255,255,255,@alpha));
+    background-image: -moz-linear-gradient(@origin, rgba(255,255,255,0.0), rgba(255,255,255,@alpha));
+    background-image: -o-linear-gradient(@origin, rgba(255,255,255,0.0), rgba(255,255,255,@alpha));
+    background-image: -ms-linear-gradient(@origin, rgba(255,255,255,0.0), rgba(255,255,255,@alpha));
+    background-image: linear-gradient(@origin, rgba(255,255,255,0.0), rgba(255,255,255,@alpha));
+}
+
+//	Gradients  (bottom > top)
+.gradient (@color1, @color2) {
+	background-image: linear-gradient(bottom, @color1 0%, @color2 100%);
+	background-image: -o-linear-gradient(bottom, @color1 0%, @color2 100%);
+	background-image: -moz-linear-gradient(bottom, @color1 0%, @color2 100%);
+	background-image: -webkit-linear-gradient(bottom, @color1 0%, @color2 100%);
+	background-image: -ms-linear-gradient(bottom, @color1 0%, @color2 100%);
+	background-image: -webkit-gradient(
+		linear,
+		left bottom,
+		left top,
+		color-stop(0, @color1),
+		color-stop(1, @color2)
+	);
+	background-color:@color1;
+}
+
+// Transitions
+.transition (@type: all, @duration: .5s, @ease: ease) {
+	-moz-transition: @arguments;
+    -o-transition: @arguments;
+    -webkit-transition: @arguments;
+    -ms-transition: @arguments;
+    transition: @arguments;
+}
+.no-transition () {
+	-moz-transition: none;
+    -o-transition: none;
+    -webkit-transition: none;
+    -ms-transition: none;
+    transition: none;
+}
+
+//	Fonts
+//	http://css-tricks.com/snippets/css/less-mixin-for-rem-font-sizing/
+//	Slightly changed for our use (Emanuel)
+.font-size (@sizeinpx) {
+	@pxValue: @sizeinpx;
+	@remValue: (@sizeinpx / 16);
+	font-size: ~"@{pxValue}px"; 
+	font-size: ~"@{remValue}rem";
+}
+
+//	Calculate percent
+//	This helps you calculate element width in percent
+.width(@width, @pagewidth) {
+	width: percentage(@width/@pagewidth);
+}
+
+// Other 
+.ir {
+    text-indent:-9999px;
+    outline:none
+}
+
+.cf () {
+	zoom: 1;
+	&:after {
+		display: block;
+		visibility: hidden;
+		height: 0;
+		clear: both;
+		content: ".";
+	}
+}
+
+.reset () {
+	margin: 0;
+	padding: 0;
+}
+
+.size (@width, @height) {
+	width: @width;
+	height: @height;
+}
+
+// http://webaim.org/techniques/css/invisiblecontent/
+.visually-hidden {
+	position: absolute;
+	left: -10000px;
+	top: auto;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+}

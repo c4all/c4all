@@ -1,0 +1,788 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-03-31 19:10+0200\n"
+"PO-Revision-Date: 2014-03-31 19:10+0100\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: sv_SE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.6.4\n"
+
+#: admin/forms.py:23
+msgid "Show all dates"
+msgstr "Visa alla datum"
+
+#: admin/forms.py:24
+msgid "Today"
+msgstr "I dag"
+
+#: admin/forms.py:25
+msgid "This Week"
+msgstr "Denna vecka"
+
+#: admin/forms.py:26
+msgid "This Month"
+msgstr "Den här månaden"
+
+#: admin/forms.py:54 c4all/templates/custom_admin/comments.html:84
+#: c4all/templates/custom_admin/users.html:73
+msgid "Delete"
+msgstr "Radera"
+
+#: admin/forms.py:55 c4all/templates/custom_admin/users.html:67
+#: c4all/templates/custom_admin/users.html:70
+msgid "Hide"
+msgstr "Göm"
+
+#: admin/views.py:117
+msgid "articles"
+msgstr "artiklar"
+
+#: admin/views.py:151 c4all/templates/comments.html:8
+#: c4all/templates/custom_admin/threads.html:75
+msgid "comments"
+msgstr "kommentarer"
+
+#: admin/views.py:215
+msgid "users"
+msgstr "användare"
+
+#: c4all/templates/comments.html:8
+msgid "comment"
+msgstr "kommentar"
+
+#: c4all/templates/comments.html:16 c4all/templates/comments.html.py:22
+msgid "View all comments"
+msgstr "Visa alla kommentarerna"
+
+#: c4all/templates/comments.html:30 c4all/templates/comments.html.py:99
+msgid "Tools"
+msgstr "Verktyg"
+
+#: c4all/templates/comments.html:33
+msgid "Go to editor interface"
+msgstr "Gå till redaktörsgränssnittet"
+
+#: c4all/templates/comments.html:62
+msgid "My comment"
+msgstr "Min kommentar"
+
+#: c4all/templates/comments.html:64
+msgid "Last comment"
+msgstr "Senaste kommentaren"
+
+#: c4all/templates/comments.html:77
+msgid "at"
+msgstr "klockan"
+
+#: c4all/templates/comments.html:88
+msgid "Listen to comment"
+msgstr "Lyssna på kommentaren"
+
+#: c4all/templates/comments.html:102
+msgid "Publish comment"
+msgstr "Publicera kommentar"
+
+#: c4all/templates/comments.html:106
+msgid "Unpublish comment"
+msgstr "Avpublicera kommentar"
+
+#: c4all/templates/dislike_snippet.html:5 c4all/templates/header.html:26
+msgid "Bad"
+msgstr "Dåligt"
+
+#: c4all/templates/dislike_snippet.html:7 c4all/templates/header.html:21
+#: c4all/templates/header.html.py:28 c4all/templates/like_snippet.html:7
+msgid "voted"
+msgstr "tycker"
+
+#: c4all/templates/dislike_snippet.html:7 c4all/templates/header.html:21
+#: c4all/templates/header.html.py:28 c4all/templates/like_snippet.html:7
+msgid "person"
+msgstr "person"
+
+#: c4all/templates/dislike_snippet.html:7 c4all/templates/header.html:21
+#: c4all/templates/header.html.py:28 c4all/templates/like_snippet.html:7
+msgid "persons"
+msgstr "personer"
+
+#: c4all/templates/footer.html:4
+msgid "Comment"
+msgstr "Kommentera"
+
+#: c4all/templates/footer.html:8 c4all/templates/footer.html.py:22
+#: c4all/templates/footer.html:48
+msgid "What you can write"
+msgstr "Så får du skriva"
+
+#: c4all/templates/footer.html:9 c4all/templates/footer.html.py:11
+msgid "Read rules"
+msgstr "Läs regler"
+
+#: c4all/templates/footer.html:13 c4all/templates/footer.html.py:15
+msgid "See video with rules"
+msgstr "Se film med regler"
+
+#: c4all/templates/footer.html:23
+msgid ""
+"\n"
+"        <p>You can write what you think.<br>\n"
+"        But you can't write mean things<br>\n"
+"        about other people.<br>\n"
+"        You may not write that some people<br>\n"
+"        are worse than others.<br>\n"
+"        Then we will remove what you have written.<br>\n"
+"        Everyone should feel free<br>\n"
+"        to write what they think about our news.</p>\n"
+"\n"
+"        <p>Everyone can read what you write.<br>\n"
+"        Think carefully about what you want it to say.<br>\n"
+"        You don't have to write your real name.<br>\n"
+"        But you may not pretend to be someone else<br>\n"
+"        who exists.</p>\n"
+"\n"
+"        <p>You don't have to write words.<br>\n"
+"        You can also click one of the pictures<br>\n"
+"        that show different feelings.</p>\n"
+"        "
+msgstr ""
+"\n"
+"        <p>Du får skriva vad du tycker.<br>\n"
+"        Men du får inte skriva elaka saker<br>\n"
+"        om andra människor.<br>\n"
+"        Du får inte skriva att vissa människor<br>\n"
+"        är sämre än andra.<br>\n"
+"        I så fall tar vi bort det du har skrivit.<br>\n"
+"        Alla ska känna sig välkomna<br>\n"
+"        att skriva vad de tycker om våra nyheter.</p>\n"
+"\n"
+"        <p>Alla kan läsa det du skriver.<br>\n"
+"        Tänk noga på vad du vill att det ska stå.<br>\n"
+"        Du måste inte skriva ditt riktiga namn.<br>\n"
+"        Men du får inte låtsas vara någon annan<br>\n"
+"        som finns på riktigt.</p>\n"
+"\n"
+"        <p>Du måste inte skriva ord.<br>\n"
+"        Du kan också klicka på någon av bilderna<br>\n"
+"        som visar olika känslor.</p>\n"
+"        "
+
+#: c4all/templates/footer.html:62 c4all/templates/header.html:9
+msgid "Write"
+msgstr "Skriv"
+
+#: c4all/templates/footer.html:63 c4all/templates/footer.html.py:64
+#: c4all/templates/footer.html:65
+msgid "Like"
+msgstr "Tycker om"
+
+#: c4all/templates/footer.html:67 c4all/templates/footer.html.py:68
+#: c4all/templates/footer.html:69
+msgid "Happy"
+msgstr "Glad"
+
+#: c4all/templates/footer.html:71 c4all/templates/footer.html.py:72
+#: c4all/templates/footer.html:73
+msgid "Satisfied"
+msgstr "Nöjd"
+
+#: c4all/templates/footer.html:75 c4all/templates/footer.html.py:76
+#: c4all/templates/footer.html:77
+msgid "Don't care"
+msgstr "Bryr mig inte"
+
+#: c4all/templates/footer.html:79 c4all/templates/footer.html.py:80
+#: c4all/templates/footer.html:81
+msgid "Cranky"
+msgstr "Sur"
+
+#: c4all/templates/footer.html:83 c4all/templates/footer.html.py:84
+#: c4all/templates/footer.html:85
+msgid "Angry"
+msgstr "Arg"
+
+#: c4all/templates/footer.html:91
+msgid "Help"
+msgstr "Hjälp"
+
+#: c4all/templates/footer.html:92 c4all/templates/footer.html.py:94
+msgid "Spell check"
+msgstr "Rättstavning"
+
+#: c4all/templates/footer.html:96 c4all/templates/footer.html.py:98
+msgid "Listen"
+msgstr "Lyssna"
+
+#: c4all/templates/footer.html:105
+msgid "Enter comment"
+msgstr "Skriv kommentar"
+
+#: c4all/templates/footer.html:125 c4all/templates/footer.html.py:127
+#: c4all/templates/footer.html:164 c4all/templates/footer.html.py:166
+msgid "Choose a picture"
+msgstr "Välj bild"
+
+#: c4all/templates/footer.html:135 c4all/templates/footer.html.py:173
+#: c4all/templates/snippets/change_password_form.html:8
+msgid "Name"
+msgstr "Namn"
+
+#: c4all/templates/footer.html:142 c4all/templates/footer.html.py:270
+msgid "Send"
+msgstr "Skicka"
+
+#: c4all/templates/footer.html:156
+msgid "Sign up"
+msgstr "Skriv under"
+
+#: c4all/templates/footer.html:157
+msgid "Or, Log in"
+msgstr "Eller, logga in"
+
+#: c4all/templates/footer.html:158
+msgid ""
+"If you register, you can keep the same display name each time you comment."
+msgstr ""
+"Om du registrerar dig kan du behålla samma visningsnamn varje gång du "
+"kommenterar."
+
+#: c4all/templates/footer.html:179 c4all/templates/footer.html.py:220
+#: c4all/templates/custom_admin/users.html:44
+#: c4all/templates/snippets/change_password_form.html:14
+msgid "E-mail"
+msgstr "E-post"
+
+#: c4all/templates/footer.html:185 c4all/templates/footer.html.py:226
+#: c4all/templates/custom_admin/login.html:24
+msgid "Password"
+msgstr "Lösenord"
+
+#: c4all/templates/footer.html:191
+msgid "Repeat"
+msgstr "Upprepa"
+
+#: c4all/templates/footer.html:198
+msgid "Register and send comment"
+msgstr "Registrera dig och skicka kommentar"
+
+#: c4all/templates/footer.html:202 c4all/templates/footer.html.py:237
+#: c4all/templates/custom_admin/comments.html:105
+#: c4all/templates/snippets/change_password_form.html:40
+msgid "Cancel"
+msgstr "Avbryt"
+
+#: c4all/templates/footer.html:214 c4all/templates/footer.html.py:233
+msgid "Log in"
+msgstr "Logga in"
+
+#: c4all/templates/footer.html:215
+msgid "Or, Sign up"
+msgstr "Eller, registrera dig"
+
+#: c4all/templates/footer.html:255
+msgid "You are logged in as"
+msgstr "Du är inloggad som"
+
+#: c4all/templates/footer.html:274 c4all/templates/custom_admin/base.html:55
+msgid "Logout"
+msgstr "Logga ut"
+
+#: c4all/templates/header.html:9
+msgid "something about this article"
+msgstr "något om artikeln"
+
+#: c4all/templates/header.html:13
+msgid "What do you think about this article?"
+msgstr "Vad tycker du om den här artikeln?"
+
+#: c4all/templates/header.html:19 c4all/templates/like_snippet.html:5
+msgid "Good"
+msgstr "Bra"
+
+#: c4all/templates/custom_admin/base.html:7
+msgid "c4all admin"
+msgstr "c4all admin"
+
+#: c4all/templates/custom_admin/base.html:39
+#: c4all/templates/custom_admin/comments.html:13
+#: c4all/templates/custom_admin/comments.html:17
+#: c4all/templates/custom_admin/threads.html:13
+#: c4all/templates/custom_admin/threads.html:17
+#: c4all/templates/custom_admin/threads.html:29
+msgid "Articles"
+msgstr "Artiklar"
+
+#: c4all/templates/custom_admin/base.html:44
+#: c4all/templates/custom_admin/users.html:6
+#: c4all/templates/custom_admin/users.html:27
+msgid "Users"
+msgstr "Användare"
+
+#: c4all/templates/custom_admin/base.html:50
+msgid "Logged in as"
+msgstr "Inloggad som"
+
+#: c4all/templates/custom_admin/comments.html:38
+#: c4all/templates/custom_admin/threads.html:59
+#: c4all/templates/custom_admin/users.html:47
+msgid "Comments"
+msgstr "Kommentarer"
+
+#: c4all/templates/custom_admin/comments.html:39
+#: c4all/templates/custom_admin/threads.html:30
+#: c4all/templates/custom_admin/users.html:28
+msgid "showing"
+msgstr "visar"
+
+#: c4all/templates/custom_admin/comments.html:39
+#: c4all/templates/custom_admin/threads.html:30
+#: c4all/templates/custom_admin/users.html:28
+#: c4all/templates/snippets/pagination.html:22
+msgid "of"
+msgstr "av"
+
+#: c4all/templates/custom_admin/comments.html:50
+#: c4all/templates/custom_admin/users.html:41
+msgid "User"
+msgstr "Användare"
+
+#: c4all/templates/custom_admin/comments.html:53
+msgctxt "entity"
+msgid "Comment"
+msgstr "Kommentar"
+
+#: c4all/templates/custom_admin/comments.html:70
+msgid "Written"
+msgstr "Skriven"
+
+#: c4all/templates/custom_admin/comments.html:77
+#: c4all/templates/custom_admin/comments.html:80
+msgid "Publish"
+msgstr "Publicera"
+
+#: c4all/templates/custom_admin/comments.html:78
+#: c4all/templates/custom_admin/comments.html:81
+msgid "Unpublish"
+msgstr "Avpublicera"
+
+#: c4all/templates/custom_admin/comments.html:102
+msgid "Are you sure that you want to delete the comment by"
+msgstr "Är du säker på att du vill radera kommentaren från"
+
+#: c4all/templates/custom_admin/comments.html:104
+msgid "Delete comment"
+msgstr "Radera kommentar"
+
+#: c4all/templates/custom_admin/login.html:17
+msgid "Email"
+msgstr "E-post"
+
+#: c4all/templates/custom_admin/login.html:31
+#: c4all/templates/custom_admin/login.html:32
+msgid "Login"
+msgstr "Logga in"
+
+#: c4all/templates/custom_admin/login.html:35
+msgid "Remember me"
+msgstr "Kom ihåg mig"
+
+#: c4all/templates/custom_admin/logout.html:6
+msgid "You have been logged out."
+msgstr "Du har blivit utloggad."
+
+#: c4all/templates/custom_admin/threads.html:56
+msgid "Article"
+msgstr "Artikel"
+
+#: c4all/templates/custom_admin/threads.html:62
+#: c4all/templates/custom_admin/users.html:50
+msgid "Date"
+msgstr "Datum"
+
+#: c4all/templates/custom_admin/threads.html:65
+msgid "Last commented on"
+msgstr "Senast kommenterad"
+
+#: c4all/templates/custom_admin/threads.html:75
+msgid "View"
+msgstr "Visa"
+
+#: c4all/templates/custom_admin/users.html:62
+msgid "Modify"
+msgstr "Ändra"
+
+#: c4all/templates/custom_admin/users.html:66
+#: c4all/templates/custom_admin/users.html:69
+msgid "Reveal"
+msgstr "Visa"
+
+#: c4all/templates/snippets/avatar_picker.html:3
+#: c4all/templates/snippets/avatar_picker.html:4
+#: c4all/templates/snippets/avatar_picker.html:5
+#: c4all/templates/snippets/avatar_picker.html:19
+#: c4all/templates/snippets/avatar_picker.html:20
+#: c4all/templates/snippets/avatar_picker.html:21
+#: c4all/templates/snippets/avatar_picker.html:35
+#: c4all/templates/snippets/avatar_picker.html:36
+#: c4all/templates/snippets/avatar_picker.html:37
+#: c4all/templates/snippets/avatar_picker.html:51
+#: c4all/templates/snippets/avatar_picker.html:52
+#: c4all/templates/snippets/avatar_picker.html:53
+#: c4all/templates/snippets/avatar_picker.html:67
+#: c4all/templates/snippets/avatar_picker.html:68
+#: c4all/templates/snippets/avatar_picker.html:69
+#: c4all/templates/snippets/avatar_picker.html:83
+#: c4all/templates/snippets/avatar_picker.html:84
+#: c4all/templates/snippets/avatar_picker.html:85
+msgid "Blue"
+msgstr "Blå"
+
+#: c4all/templates/snippets/avatar_picker.html:3
+#: c4all/templates/snippets/avatar_picker.html:4
+#: c4all/templates/snippets/avatar_picker.html:5
+#: c4all/templates/snippets/avatar_picker.html:7
+#: c4all/templates/snippets/avatar_picker.html:8
+#: c4all/templates/snippets/avatar_picker.html:9
+#: c4all/templates/snippets/avatar_picker.html:11
+#: c4all/templates/snippets/avatar_picker.html:12
+#: c4all/templates/snippets/avatar_picker.html:13
+#: c4all/templates/snippets/avatar_picker.html:15
+#: c4all/templates/snippets/avatar_picker.html:16
+#: c4all/templates/snippets/avatar_picker.html:17
+msgid "circle"
+msgstr "cirkel"
+
+#: c4all/templates/snippets/avatar_picker.html:7
+#: c4all/templates/snippets/avatar_picker.html:8
+#: c4all/templates/snippets/avatar_picker.html:9
+#: c4all/templates/snippets/avatar_picker.html:23
+#: c4all/templates/snippets/avatar_picker.html:24
+#: c4all/templates/snippets/avatar_picker.html:25
+#: c4all/templates/snippets/avatar_picker.html:39
+#: c4all/templates/snippets/avatar_picker.html:40
+#: c4all/templates/snippets/avatar_picker.html:41
+#: c4all/templates/snippets/avatar_picker.html:55
+#: c4all/templates/snippets/avatar_picker.html:56
+#: c4all/templates/snippets/avatar_picker.html:57
+#: c4all/templates/snippets/avatar_picker.html:71
+#: c4all/templates/snippets/avatar_picker.html:72
+#: c4all/templates/snippets/avatar_picker.html:73
+#: c4all/templates/snippets/avatar_picker.html:87
+#: c4all/templates/snippets/avatar_picker.html:88
+#: c4all/templates/snippets/avatar_picker.html:89
+msgid "Green"
+msgstr "Grön"
+
+#: c4all/templates/snippets/avatar_picker.html:11
+#: c4all/templates/snippets/avatar_picker.html:12
+#: c4all/templates/snippets/avatar_picker.html:13
+#: c4all/templates/snippets/avatar_picker.html:27
+#: c4all/templates/snippets/avatar_picker.html:28
+#: c4all/templates/snippets/avatar_picker.html:29
+#: c4all/templates/snippets/avatar_picker.html:43
+#: c4all/templates/snippets/avatar_picker.html:44
+#: c4all/templates/snippets/avatar_picker.html:45
+#: c4all/templates/snippets/avatar_picker.html:59
+#: c4all/templates/snippets/avatar_picker.html:60
+#: c4all/templates/snippets/avatar_picker.html:61
+#: c4all/templates/snippets/avatar_picker.html:75
+#: c4all/templates/snippets/avatar_picker.html:76
+#: c4all/templates/snippets/avatar_picker.html:77
+#: c4all/templates/snippets/avatar_picker.html:91
+#: c4all/templates/snippets/avatar_picker.html:92
+#: c4all/templates/snippets/avatar_picker.html:93
+msgid "Yellow"
+msgstr "Gul"
+
+#: c4all/templates/snippets/avatar_picker.html:15
+#: c4all/templates/snippets/avatar_picker.html:16
+#: c4all/templates/snippets/avatar_picker.html:17
+#: c4all/templates/snippets/avatar_picker.html:31
+#: c4all/templates/snippets/avatar_picker.html:32
+#: c4all/templates/snippets/avatar_picker.html:33
+#: c4all/templates/snippets/avatar_picker.html:47
+#: c4all/templates/snippets/avatar_picker.html:48
+#: c4all/templates/snippets/avatar_picker.html:49
+#: c4all/templates/snippets/avatar_picker.html:63
+#: c4all/templates/snippets/avatar_picker.html:64
+#: c4all/templates/snippets/avatar_picker.html:65
+#: c4all/templates/snippets/avatar_picker.html:79
+#: c4all/templates/snippets/avatar_picker.html:80
+#: c4all/templates/snippets/avatar_picker.html:81
+#: c4all/templates/snippets/avatar_picker.html:95
+#: c4all/templates/snippets/avatar_picker.html:96
+#: c4all/templates/snippets/avatar_picker.html:97
+msgid "Pink"
+msgstr "Rosa"
+
+#: c4all/templates/snippets/avatar_picker.html:19
+#: c4all/templates/snippets/avatar_picker.html:20
+#: c4all/templates/snippets/avatar_picker.html:21
+#: c4all/templates/snippets/avatar_picker.html:23
+#: c4all/templates/snippets/avatar_picker.html:24
+#: c4all/templates/snippets/avatar_picker.html:25
+#: c4all/templates/snippets/avatar_picker.html:27
+#: c4all/templates/snippets/avatar_picker.html:28
+#: c4all/templates/snippets/avatar_picker.html:29
+#: c4all/templates/snippets/avatar_picker.html:31
+#: c4all/templates/snippets/avatar_picker.html:32
+#: c4all/templates/snippets/avatar_picker.html:33
+msgid "star"
+msgstr "stjärna"
+
+#: c4all/templates/snippets/avatar_picker.html:35
+#: c4all/templates/snippets/avatar_picker.html:36
+#: c4all/templates/snippets/avatar_picker.html:37
+#: c4all/templates/snippets/avatar_picker.html:39
+#: c4all/templates/snippets/avatar_picker.html:40
+#: c4all/templates/snippets/avatar_picker.html:41
+#: c4all/templates/snippets/avatar_picker.html:43
+#: c4all/templates/snippets/avatar_picker.html:44
+#: c4all/templates/snippets/avatar_picker.html:45
+#: c4all/templates/snippets/avatar_picker.html:47
+#: c4all/templates/snippets/avatar_picker.html:48
+#: c4all/templates/snippets/avatar_picker.html:49
+msgid "dot"
+msgstr "punkt"
+
+#: c4all/templates/snippets/avatar_picker.html:51
+#: c4all/templates/snippets/avatar_picker.html:52
+#: c4all/templates/snippets/avatar_picker.html:53
+#: c4all/templates/snippets/avatar_picker.html:55
+#: c4all/templates/snippets/avatar_picker.html:56
+#: c4all/templates/snippets/avatar_picker.html:57
+#: c4all/templates/snippets/avatar_picker.html:59
+#: c4all/templates/snippets/avatar_picker.html:60
+#: c4all/templates/snippets/avatar_picker.html:61
+#: c4all/templates/snippets/avatar_picker.html:63
+#: c4all/templates/snippets/avatar_picker.html:64
+#: c4all/templates/snippets/avatar_picker.html:65
+msgid "drop"
+msgstr "droppe"
+
+#: c4all/templates/snippets/avatar_picker.html:67
+#: c4all/templates/snippets/avatar_picker.html:68
+#: c4all/templates/snippets/avatar_picker.html:69
+#: c4all/templates/snippets/avatar_picker.html:71
+#: c4all/templates/snippets/avatar_picker.html:72
+#: c4all/templates/snippets/avatar_picker.html:73
+#: c4all/templates/snippets/avatar_picker.html:75
+#: c4all/templates/snippets/avatar_picker.html:76
+#: c4all/templates/snippets/avatar_picker.html:77
+#: c4all/templates/snippets/avatar_picker.html:79
+#: c4all/templates/snippets/avatar_picker.html:80
+#: c4all/templates/snippets/avatar_picker.html:81
+msgid "leaf"
+msgstr "löv"
+
+#: c4all/templates/snippets/avatar_picker.html:83
+#: c4all/templates/snippets/avatar_picker.html:84
+#: c4all/templates/snippets/avatar_picker.html:85
+#: c4all/templates/snippets/avatar_picker.html:87
+#: c4all/templates/snippets/avatar_picker.html:88
+#: c4all/templates/snippets/avatar_picker.html:89
+#: c4all/templates/snippets/avatar_picker.html:91
+#: c4all/templates/snippets/avatar_picker.html:92
+#: c4all/templates/snippets/avatar_picker.html:93
+#: c4all/templates/snippets/avatar_picker.html:95
+#: c4all/templates/snippets/avatar_picker.html:96
+#: c4all/templates/snippets/avatar_picker.html:97
+msgid "flower"
+msgstr "blomma"
+
+#: c4all/templates/snippets/change_password_form.html:21
+msgid "New password"
+msgstr "Nytt lösenord"
+
+#: c4all/templates/snippets/change_password_form.html:28
+msgid "Repeat password"
+msgstr "Upprepa lösenord"
+
+#: c4all/templates/snippets/change_password_form.html:38
+msgid "Modify user"
+msgstr "Ändra användare"
+
+#: c4all/templates/snippets/filter_form.html:6
+msgid "Choose a site"
+msgstr "Välj sajt"
+
+#: c4all/templates/snippets/pagination.html:5
+msgid "Total"
+msgstr "Totalt"
+
+#: c4all/templates/snippets/pagination.html:11
+msgid "First"
+msgstr "Första"
+
+#: c4all/templates/snippets/pagination.html:17
+msgid "previous"
+msgstr "föregående"
+
+#: c4all/templates/snippets/pagination.html:28
+msgid "Next"
+msgstr "Nästa"
+
+#: c4all/templates/snippets/pagination.html:34
+msgid "last"
+msgstr "sista"
+
+#: c4all/templates/snippets/sec_nav_comments.html:14
+#: c4all/templates/snippets/sec_nav_users.html:13
+msgid "Show"
+msgstr "Visa"
+
+#: c4all/templates/snippets/sec_nav_comments.html:16
+#: c4all/templates/snippets/sec_nav_users.html:15
+msgid "ALL"
+msgstr "ALLA"
+
+#: c4all/templates/snippets/sec_nav_comments.html:17
+#: c4all/templates/snippets/sec_nav_users.html:16
+msgid "Hidden"
+msgstr "Gömda"
+
+#: c4all/templates/snippets/sec_nav_comments.html:24
+msgid "Current article"
+msgstr "Aktuell artikel"
+
+#: c4all/templates/snippets/sec_nav_comments.html:33
+#: c4all/templates/snippets/sec_nav_users.html:28
+msgid "Commit"
+msgstr "Utför"
+
+#: c4all/templates/snippets/secondary_navigation.html:28
+msgid "Select period"
+msgstr "Välj period"
+
+#: c4all/templates/snippets/secondary_navigation.html:32
+msgid "Filter"
+msgstr "Filter"
+
+#: comments/forms.py:27
+msgid "wrong username or password"
+msgstr "fel användarnamn eller lösenord"
+
+#: comments/forms.py:30
+msgid "user not active"
+msgstr "användaren är inte aktiv"
+
+#: comments/forms.py:44
+msgid "user hidden"
+msgstr "användaren är gömd"
+
+#: comments/forms.py:61
+msgid "user not staff"
+msgstr "Användare är inte administratör"
+
+#: comments/forms.py:88
+msgid "You have already registered"
+msgstr "Du har redan registrerat dig"
+
+#: comments/forms.py:94
+msgid "Please enter your name"
+msgstr "Skriv in ditt namn"
+
+#: comments/forms.py:102
+msgid "Passwords don't match"
+msgstr "Lösenordsfälten matchar inte varandra"
+
+#: comments/forms.py:165
+msgid "poster name not provided"
+msgstr "namn på kommentator saknas"
+
+#: comments/forms.py:175
+#, python-format
+msgid "site with domain %s does not exist"
+msgstr "sajt med domän %s finns inte"
+
+#: comments/forms.py:178
+msgid "domain not provided"
+msgstr "domän saknas"
+
+#: comments/forms.py:185
+msgid "thread not provided"
+msgstr "artikel saknas"
+
+#: comments/forms.py:192
+#, python-format
+msgid "thread with id %s does not exist"
+msgstr "artikel med namn %s existerar inte"
+
+#: comments/forms.py:236
+msgid "Enter a valid value"
+msgstr "Fyll i ett giltigt värde"
+
+#: comments/views.py:57 comments/views.py:108
+msgid "Submitted data not valid."
+msgstr "Inskickad data är inte giltig."
+
+#: comments/views.py:75
+msgid "logged out"
+msgstr "utloggad"
+
+#: comments/views.py:87
+msgid "invalid avatar_num number: "
+msgstr "ogiltigt avatar_num nummer:"
+
+#: comments/views.py:255 comments/views.py:295
+msgid "User not staff"
+msgstr "Användare är inte administratör"
+
+#: comments/views.py:405 comments/views.py:494 comments/views.py:520
+#, python-format
+msgid "could not get comments, errors: %s"
+msgstr "kunde inte hämta kommentarer, fel: %s"
+
+#: comments/views.py:420
+msgid "thread url not provided"
+msgstr "artikel-url saknas"
+
+#: comments/views.py:504 comments/views.py:530
+#, python-format
+msgid "domain with name %s does not exist"
+msgstr "domän med namn %s existerar inte"
+
+#: comments/views.py:558 comments/views.py:584
+msgid "spell checking not supported"
+msgstr "stavningskontroll stöds ej"
+
+#: comments/views.py:565
+msgid "text not provided"
+msgstr "text saknas"
+
+#: comments/views.py:591
+msgid "word not provided"
+msgstr "ord saknas"
+
+#: comments/utils/spellcheck_localization.py:4
+msgid "There was an error processing the request."
+msgstr "Et fel uppstod."
+
+#: comments/utils/spellcheck_localization.py:5
+msgid "Ignore word"
+msgstr "Ignorera ord"
+
+#: comments/utils/spellcheck_localization.py:6
+msgid "Ignore all"
+msgstr "Ignorera alla"
+
+#: comments/utils/spellcheck_localization.py:7
+msgid "Add to dictionary"
+msgstr "Lägg till ordlistan"
+
+#: comments/utils/spellcheck_localization.py:8
+msgid "Loading..."
+msgstr "Laddar..."
+
+#: comments/utils/spellcheck_localization.py:9
+msgid "(No suggestions)"
+msgstr "(Inga förslag)"

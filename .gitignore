@@ -1,0 +1,13 @@
+*.pyc
+*.mo
+/*/settings/local.py
+/*/settings/secret.py
+/*/static/
+/*/media/
+/dev.db
+/c4all/dev.db
+/.coverage
+/cover/
+/coverage.xml
+/nosetests.xml
+*.log

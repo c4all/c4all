@@ -1,0 +1,49 @@
+{% extends 'custom_admin/base.html' %}
+{% load i18n %}
+
+{% block content %}
+<!-- Main -->
+<section id="main" role="main">
+    <div class="container">
+
+        <!-- Login -->
+        <div class="login">
+
+            <form action="{% url 'c4all_admin:login_admin' %}" method="post" class="login-form">{% csrf_token %}
+
+                <fieldset>
+
+                    <div class="field">
+                        <label for="id_email">{% trans "Email" %}</label>
+                        <strong class="admin-error">{{ form.email.errors }}</strong>
+                        <div class="group">
+                            <input type="text" id="id_email" name="email">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label for="id_password">{% trans "Password" %}</label>
+                        <strong class="admin-error">{{ form.password.errors }}</strong>
+                        <div class="group">
+                            <input type="password" id="id_password" name="password">
+                        </div>
+                    </div>
+                <div class="field action">
+                    <button class="button alt" title="{% trans "Login" %}">
+                        <span class="button-label">{% trans "Login" %}</span>
+                    </button>
+                    <div class="remember">
+                        <label class="checkbox">{% trans "Remember me" %}<input type="checkbox"></label>
+                    </div>
+                </div>
+                </fieldset>
+            </form>
+
+            </div>
+            <!-- /Login -->
+
+        </div>
+
+</section>
+<!-- /Main -->
+
+{% endblock %}

@@ -1,0 +1,108 @@
+{% extends 'custom_admin/base.html' %}
+{% load i18n %}
+
+{% block selected_site_title %}
+    {% if selected_site %}
+        {{ selected_site.domain }}
+    {% endif %}
+{% endblock %}
+
+{% block thread_url %}
+    {% if selected_site %}
+    <li class="item-button is-active">
+            <a href="{% url 'c4all_admin:get_threads' selected_site.id %}">{% trans "Articles" %}</a>
+    </li>
+    {% else %}
+    <li class="item-button is-active">
+            <a href="{% url 'c4all_admin:get_threads' %}">{% trans "Articles" %}</a>
+    </li>
+    {% endif %}
+{% endblock %}
+
+{% block filter_form %}
+    {% include "snippets/filter_form.html" with selected_option=selected_site objects=sites options_url_name="c4all_admin:get_threads" %}
+{% endblock %}
+
+
+{% block page_title %}
+    <div class="page-title">
+        <h1>{% trans "Articles" %}</h1>
+        <p>({% trans "showing" %} {{ threads.start_index }}–{{ threads.end_index }} {% trans "of" %} {{ threads.paginator.count }})</p>
+    </div>
+{% endblock %}
+
+
+{% block content %}
+            <!--Secondary navigation + pagination -->
+
+                {% if selected_site %}
+
+
+                    {% include "snippets/secondary_navigation.html" with objects=threads selected_site=selected_site %}
+
+                {% else %}
+
+                    {% include "snippets/secondary_navigation.html" with objects=threads %}
+
+                {% endif %}
+
+            <!-- /Secondary navigation + pagination -->
+
+            <!-- Article listing -->
+            <div class="item-listing article-listing">
+
+                <div class="item item-header">
+                    <div class="col-article">
+                        <p>{% trans "Article" %}</p>
+                    </div>
+                    <div class="col-comments">
+                        <p><i class="icon icon-comment" aria-hidden="true"></i>{% trans "Comments" %}</p>
+                    </div>
+                    <div class="col-date">
+                        <a href="{% url 'c4all_admin:get_threads' %}?sort_by=thread_date"><p>{% trans "Date" %}</p></a>
+                    </div>
+                    <div class="col-date">
+                        <a href="{% url 'c4all_admin:get_threads' %}"><p>{% trans "Last commented on" %}</p></a>
+                    </div>
+                </div>
+
+
+                {% for thread in threads %}
+                    <!-- Item -->
+                        <div class={% if forloop.counter|divisibleby:2 %}"item"{% else %}"item odd"{% endif %}>
+                            <div class="col-article">
+                                <h3 class="name">{{ thread.title }}</h3>
+                                <p><a href="{% url 'c4all_admin:get_thread_comments' thread.id %}">{% trans "View" %} {{ thread.comments.count }} {% trans "comments" %}</a></p>
+                            </div>
+                            <div class="col-comments">
+                                <p><a href="{% url 'c4all_admin:get_thread_comments' thread.id %}"><i class="icon icon-comment" aria-hidden="true"></i>{{ thread.comments.count }}</a></p>
+                            </div>
+                            <div class="col-date">
+                                <p>{{ thread.created|date:"Y-m-d" }}</p>
+                            </div>
+                            <div class="col-date">
+                                <p>{{ thread.max_comment_date|date:"Y-m-d" }}</p>
+                            </div>
+                        </div>
+                    <!-- /Item -->
+                {% endfor %}
+
+            </div>
+            <!-- /Article listing -->
+
+            <!--Secondary navigation + pagination -->
+
+                {% if selected_site %}
+
+                    {% include "snippets/secondary_navigation.html" with objects=threads selected_site=selected_site %}
+
+                {% else %}
+
+                    {% include "snippets/secondary_navigation.html" with objects=threads %}
+
+                {% endif %}
+
+            <!-- /Secondary navigation + pagination -->
+
+
+{% endblock %}

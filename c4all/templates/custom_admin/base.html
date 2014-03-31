@@ -1,0 +1,135 @@
+{% load i18n %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>{% block title %}{% trans "c4all admin" %}{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="{{ STATIC_URL }}admin_ui/css/style.css" type="text/css" media="screen" />
+
+    {% block css %}
+    {% endblock %}
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  </head>
+
+  <body>
+
+
+<!-- Page Header -->
+{% if request.user.is_authenticated and request.user.is_staff %}
+    {% block header %}
+        <header id="page-header" role="banner">
+            <div class="container">
+
+                <div class="site-branding">
+                    <div class="site-title">
+                        {% block selected_site_title %}
+                        {% endblock %}
+                    </div>
+                </div>
+
+                <nav class="site-nav" role="navigation">
+
+                    <ul class="primary-nav">
+                        {% block thread_url %}
+                            <li class="item-button">
+                                <a href="{% url 'c4all_admin:get_threads' %}">{% trans "Articles" %}</a>
+                            </li>
+                        {% endblock %}
+                        {% block users_url %}
+                            <li class="item-button">
+                                <a href="{% url 'c4all_admin:get_users' %}">{% trans "Users" %}</a>
+                            </li>
+                        {% endblock %}
+                    </ul>
+
+                    <ul class="secondary-nav">
+                        <li class="item-text">{% trans "Logged in as" %} <strong>{{ request.user.get_full_name }}</strong></li>
+                        <li class="item-select">
+                            {% block filter_form %}
+                            {% endblock %}
+                        </li>
+                        <li class="item-button"><a href="{% url 'c4all_admin:logout_admin' %}">{% trans "Logout" %}</a></li>
+                    </ul>
+
+                </nav>
+
+            </div>
+        </header>
+    {% endblock %}
+{% endif %}
+<!-- /Page Header -->
+
+
+<section id="main" role="main">
+    <div class="container">
+
+        <div class="outline">
+            {% block page_title %}
+            {% endblock %}
+
+            {% block sec_nav %}
+            {% endblock %}
+
+
+            {% block content %}
+            {% endblock %}
+
+
+            {% block third_nav %}
+            {% endblock %}
+        </div>
+    </div>
+</section>
+
+{% block modal %}
+{% endblock %}
+
+    <script type="text/javascript">
+        function makeAjaxCall(url){
+            $.ajaxSetup({
+                crossDomain: false, // obviates need for sameOrigin test
+                beforeSend: function(xhr, settings) {
+                    if (!csrfSafeMethod(settings.type)) {
+                        xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+                    }
+                },
+                type: "POST",
+                url: url,
+            });
+
+            return $.ajax()
+        }
+
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie != '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = jQuery.trim(cookies[i]);
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        function csrfSafeMethod(method) {
+            // these HTTP methods do not require CSRF protection
+            return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+        }
+    </script>
+
+
+    {% block js %}
+    {% endblock %}
+
+  </body>
+
+</html>
