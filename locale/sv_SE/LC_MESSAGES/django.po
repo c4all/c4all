@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-03-31 19:10+0200\n"
-"PO-Revision-Date: 2014-03-31 19:10+0100\n"
+"POT-Creation-Date: 2014-04-10 16:07+0200\n"
+"PO-Revision-Date: 2014-04-10 16:07+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: sv_SE\n"
@@ -180,33 +180,27 @@ msgstr ""
 msgid "Write"
 msgstr "Skriv"
 
-#: c4all/templates/footer.html:63 c4all/templates/footer.html.py:64
-#: c4all/templates/footer.html:65
+#: c4all/templates/footer.html:64 c4all/templates/footer.html.py:65
 msgid "Like"
 msgstr "Tycker om"
 
-#: c4all/templates/footer.html:67 c4all/templates/footer.html.py:68
-#: c4all/templates/footer.html:69
+#: c4all/templates/footer.html:68 c4all/templates/footer.html.py:69
 msgid "Happy"
 msgstr "Glad"
 
-#: c4all/templates/footer.html:71 c4all/templates/footer.html.py:72
-#: c4all/templates/footer.html:73
+#: c4all/templates/footer.html:72 c4all/templates/footer.html.py:73
 msgid "Satisfied"
 msgstr "Nöjd"
 
-#: c4all/templates/footer.html:75 c4all/templates/footer.html.py:76
-#: c4all/templates/footer.html:77
+#: c4all/templates/footer.html:76 c4all/templates/footer.html.py:77
 msgid "Don't care"
 msgstr "Bryr mig inte"
 
-#: c4all/templates/footer.html:79 c4all/templates/footer.html.py:80
-#: c4all/templates/footer.html:81
-msgid "Cranky"
-msgstr "Sur"
+#: c4all/templates/footer.html:80 c4all/templates/footer.html.py:81
+msgid "Sad"
+msgstr "Ledsen"
 
-#: c4all/templates/footer.html:83 c4all/templates/footer.html.py:84
-#: c4all/templates/footer.html:85
+#: c4all/templates/footer.html:84 c4all/templates/footer.html.py:85
 msgid "Angry"
 msgstr "Arg"
 
