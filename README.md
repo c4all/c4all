@@ -8,7 +8,7 @@ Comments for all is an easy to use comment field. Read more about it on the [web
     mkvirtualenv --no-site-packages c4all
 
     # get c4all service
-    git clone git@github.com:dobarkod/c4all.git c4all
+    git clone git@github.com:c4all/c4all.git c4all
     cd c4all
 
     # set up the development environment
@@ -21,7 +21,7 @@ Comments for all is an easy to use comment field. Read more about it on the [web
 ### The production setup
 
 The production environment can't be set up automatically (at it may require
-setting up databaes details and other per-server settings manually), but there
+setting up database details and other per-server settings manually), but there
 are some helper Makefile tasks to speed it up.
 
 To set up the production environment for c4all service, loosely
@@ -31,71 +31,71 @@ follow this procedure:
     mkvirtualenv --no-site-packages c4all
 
     # get c4all service
-    git clone git@github.com:dobarkod/c4all.git c4all
+    git clone git@github.com:c4all/c4all.git c4all
     cd c4all
 
     # install the requirements
     make reqs/prod
 
-    # create a project/settings/local.py settings file with per-server config
-    # and import prod settings (write "from .prod import *" in local file
+    # Create a project/settings/local.py settings file with per-server config
+    # and import prod settings (write "from .prod import *" in the local.py file
     # after you create it)
     vim c4all/settings/local.py
 
-    # setup your own DB. to connect c4all service and your DB, refer to settings
+    # Setup your own DB. to connect c4all and your DB, refer to the settings
     # part of this document and django docs (specifically https://docs.djangoproject.com/en/1.5/ref/databases/)
 
-    # install Node.js and less compiler
+    # Install Node.js and less compiler
     * OS-specific Node.js installation: https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager/)
     npm install -g less
 
-    # for spell checking abilities, you will need to install enchart
-    # (http://www.abisource.com/projects/enchant/) library. for specific
-    # language, take a look at supported languages at aspell site
-    # (http://aspell.net/man-html/Supported.html) and install it. language
-    # set in base settings (LANGUAGE_CODE variable) is the same language spell
-    # checker is using for its operation. after installing enchant, install
+    # For spell checking abilities, you will need to install the enchant
+    # (http://www.abisource.com/projects/enchant/) library. For a specific
+    # language, take a look at the supported languages on the aspell website
+    # (http://aspell.net/man-html/Supported.html) and install it. The language
+    # set in the base settings (LANGUAGE_CODE variable) is what the spell
+    # checker is using for its operation. After installing enchant, install
     # pyenchant by running:
     pip install pyenchant==1.6.5
 
-    # and add change setting SPELLCHECK_ENABLED in base.py:
+    # Add or change setting SPELLCHECK_ENABLED in base.py:
     SPELLCHECK_ENABLED = True
 
-    # run automatic update (db sync/migrations, collectstatic)
+    # Run automatic update (db sync/migrations, collectstatic)
     make prod-update
 
-    # create superuser (provide credentials: email and password)
+    # Create superuser (provide credentials: email and password)
     python manage.py createsuperuser
 
-    # your production environment is now ready
+    # Your production environment is now ready
     python manage.py run_gunicorn
 
-    # set the BASE_URL in base.py to "http://www.your-server-address.com".
+    # Set the BASE_URL in base.py to "http://www.your-server-address.com".
 
-    # default language is swedish, if you want to change it to english set
-    # LANGUAGE_CODE variable in base.py to 'en_EN'.
+    # The default language is Swedish, if you want to change it to English set
+    # the LANGUAGE_CODE variable in base.py to 'en_EN'.
 
-    # head to the superadmin page at www.your-server-address.com/djadmin/,
-    # login with your superuser credentials and add Site object in Sites by
-    # providing URL of the site which will host c4all comments service.
+    # Head to the superadmin page at www.your-server-address.com/djadmin/,
+    # login with your superuser credentials and add a Site object in Sites by
+    # providing the URL of the site which will include the c4all widget.
 
-    # include html snippets on your page:
+    # Include html snippets on your page:
     <script src="{{ BASE_URL }}/static/js/comments.js" type="text/javascript"></script>
     <div id="c4all-widget-container"></div>
 
-    # article name handling is done via html tag reading. if admins add ID with
-    # value "c4all-admin-page-title" to some html element, script will read its
-    # text value. if ID not provided, script will first try to read page title,
-    # followed by first h1 tag. if everything fails, url path/location will be
-    # passed to server side.
+    # Article name handling is done via html tag reading. if the ID
+    # value "c4all-admin-page-title" is added to a html element, the script will read its'
+    # text value. If ID is not provided, the script will first try to read the page title,
+    # followed by the first h1 tag. If everything fails, the url path/location will be
+    # passed to the server.
 
-    # start commenting!
+    # Start commenting!
 
 
-Text-to-speech is possible via commercial Readspeaker service (http://www.readspeaker.com/).
-After setting up Readspeaker account, enter your ReadSpeaker Customer ID into
-rs_customer_id field of Site object in superadmin interface. Ensure that domain
-where comments are displayed is the same as in ReadSpeaker admin interface.
+Text-to-speech is possible via the commercial Readspeaker service (http://www.readspeaker.com/).
+After setting up a Readspeaker account, enter your ReadSpeaker Customer ID into
+rs_customer_id field of the Site object in the superadmin interface. Ensure that the domain
+where comments are displayed is the same as in the ReadSpeaker admin interface.
 
 
 The development environment by default includes:
@@ -179,7 +179,7 @@ mix them.
 
 After setting up your new c4all project, try these:
 
-    # make sure all tests pass (you'll need to write them first, though :)
+    # make sure all tests pass
     make test
 
     # get a test coverage report (outputs to stdout, saves HTML format in
@@ -204,9 +204,9 @@ After setting up your new c4all project, try these:
 ### Heroku support
 
 To specify Python module dependencies on Heroku, add a pip requirements
-file named requirements.txt to the root of your repository. Since c4all project
+file named requirements.txt to the root of your repository. Since c4all
 has python dependencies distributed in more files, you'll have to call
-production requirements file from main requirements file you just created:
+the production requirements file from the main requirements file you just created:
 
     git checkout -b heroku
     echo "-r requirements/prod.txt" > requirements.txt
@@ -217,7 +217,7 @@ production requirements file from main requirements file you just created:
 The production setup uses database autodiscovery so if you have a (promoted)
 database in Heroku, it will automatically get picked up.
 
-For Heroku, you'll probably want to add the `Procfile` file with contents
+For Heroku, you'll probably want to add a `Procfile` file with contents
 similar to this:
 
     web: python manage.py run_gunicorn --workers=4 --bind=0.0.0.0:$PORT
@@ -300,7 +300,7 @@ Deploy a new instance of a project on a server ('myenv' will be newly created,
 code will be cloned into /path/to/project):
 
     fab server:my.server.com env:myenv project_path:/path/to/project \
-        setup:origin=http://github.com/senko/dj-skeletor
+        setup:origin=http://github.com/your/repo
 
 Deploy a new version of the project on the server (a new git tag will be
 created for each deployment, so it's easy to roll-back if needed):
