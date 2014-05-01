@@ -52,7 +52,7 @@ class IntervalSelectionForm(forms.Form):
 class BulkActionForm(forms.Form):
     BULK_ACTION_CHOICES = [
         ('delete', _('Delete')),
-        ('hide', _('Hide'))
+        ('hide', _('Unpublish'))
     ]
     action = forms.ChoiceField(choices=BULK_ACTION_CHOICES)
 
