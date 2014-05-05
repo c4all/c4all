@@ -59,10 +59,10 @@
                         <p><i class="icon icon-comment" aria-hidden="true"></i>{% trans "Comments" %}</p>
                     </div>
                     <div class="col-date">
-                        <a href="{% url 'c4all_admin:get_threads' %}?sort_by=thread_date"><p>{% trans "Date" %}</p></a>
+                        <a href="{% url 'c4all_admin:get_threads' selected_site.id %}?sort_by=thread_date"><p>{% trans "Date" %}</p></a>
                     </div>
                     <div class="col-date">
-                        <a href="{% url 'c4all_admin:get_threads' %}"><p>{% trans "Last commented on" %}</p></a>
+                        <a href="{% url 'c4all_admin:get_threads' selected_site.id %}"><p>{% trans "Last commented on" %}</p></a>
                     </div>
                 </div>
 
