@@ -18,6 +18,9 @@ import json
 
 def login_admin(request):
     if request.user.is_authenticated and request.user.is_staff:
+        if 'last_site_id' in request.session:
+            return redirect('c4all_admin:get_threads', site_id=request.session['last_site_id'])
+
         return redirect('c4all_admin:get_threads')
 
     form = StaffUserLoginForm(request.POST or None)
@@ -105,6 +108,8 @@ def threads(request, site_id=None):
 
 
     threads = paginate_data(request, thread_list)
+
+    request.session['last_site_id'] = site.id
 
     return render(
         request,
