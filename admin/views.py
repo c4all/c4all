@@ -88,7 +88,7 @@ def threads(request, site_id=None):
     thread_list = Thread.objects.all().annotate(max_comment_date=Max('comments__created'))
 
     if date:
-        thread_list = thread_list.filter(created__gt=date)
+        thread_list = thread_list.filter(created__gte=date)
 
     if site:
         thread_list = thread_list.filter(site=site)

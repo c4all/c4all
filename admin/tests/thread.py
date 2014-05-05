@@ -6,7 +6,7 @@ from django.utils.timezone import now
 
 from comments.models import (Site, Thread, Comment)
 
-from datetime import timedelta
+from datetime import timedelta, date
 
 
 User = get_user_model()
@@ -52,6 +52,22 @@ class AdminThreadTestCases(TestCase):
         self.assertTrue(t1 in threads)
         self.assertTrue(t2 not in threads)
 
+    def test_get_threads_filter_1_day_borderline_case(self):
+        t1 = Thread.objects.create(site=self.site, url='test_url')
+        t1.created = date.today()
+        t1.save()
+
+        self.client.login(email="donald@duck.com", password="password")
+
+        resp = self.client.post(
+            reverse("c4all_admin:get_threads", args=[self.site.id, ]),
+            {'interval': 'today'}
+        )
+
+        threads = resp.context['threads'].object_list
+
+        self.assertTrue(t1 in threads)
+
     def test_get_threads_filter_1_week_success(self):
         time_period = 7
 
@@ -75,6 +91,22 @@ class AdminThreadTestCases(TestCase):
         self.assertTrue(t1 in threads)
         self.assertTrue(t2 not in threads)
 
+    def test_get_threads_filter_1_week_borderline_case(self):
+        t1 = Thread.objects.create(site=self.site, url='test_url')
+        t1.created = date.today() - timedelta(date.today().weekday())
+        t1.save()
+
+        self.client.login(email="donald@duck.com", password="password")
+
+        resp = self.client.post(
+            reverse("c4all_admin:get_threads", args=[self.site.id, ]),
+            {'interval': 'this_week'}
+        )
+
+        threads = resp.context['threads'].object_list
+
+        self.assertTrue(t1 in threads)
+
     def test_get_threads_filter_1_month_success(self):
         time_period = now().day
 
@@ -97,6 +129,22 @@ class AdminThreadTestCases(TestCase):
 
         self.assertTrue(t1 in threads)
         self.assertTrue(t2 not in threads)
+
+    def test_get_threads_filter_1_month_borderline(self):
+        t1 = Thread.objects.create(site=self.site, url='test_url')
+        t1.created = date.today() - timedelta(date.today().day - 1)
+        t1.save()
+
+        self.client.login(email="donald@duck.com", password="password")
+
+        resp = self.client.post(
+            reverse("c4all_admin:get_threads", args=[self.site.id, ]),
+            {'interval': 'this_month'}
+        )
+
+        threads = resp.context['threads'].object_list
+
+        self.assertTrue(t1 in threads)
 
     def test_get_threads_filter_all_time_success(self):
         time_period = 100
