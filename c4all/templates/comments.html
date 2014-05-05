@@ -13,13 +13,13 @@
 
         {% if not all_comments and comments|visible_comments_count > WIDGET_COMMENTS_DEFAULT_NUMBER %}
           <div class="user-action">
-            <a id="btn-viev-all-comments"  href="#"><i class="icon icon-arrow-right"></i>{% trans "View all comments" %}</a>
+            <a id="btn-viev-all-comments" href="#" role="button"><i class="icon icon-arrow-right"></i>{% trans "View all comments" %}</a>
           </div>
         {% endif %}
       {% else %}
         {% if not all_comments and comments.count > WIDGET_COMMENTS_DEFAULT_NUMBER %}
           <div class="user-action">
-            <a id="btn-viev-all-comments"  href="#"><i class="icon icon-arrow-right"></i>{% trans "View all comments" %}</a>
+            <a id="btn-viev-all-comments" href="#" role="button"><i class="icon icon-arrow-right"></i>{% trans "View all comments" %}</a>
           </div>
         {% endif %}
       {% endif %}
@@ -65,7 +65,7 @@
               {% endif %}
 
               <h3 class="name">{{ comment.poster_name }}</h3>
-              <img class="avatar" src="{{ BASE_STATIC }}assets/avatar/{{ comment.get_avatar }}.png">
+              <img class="avatar" src="{{ BASE_STATIC }}assets/avatar/{{ comment.get_avatar }}.png" alt="">
           </header>
 
           <div class="comment-body" id="comment-{{ comment.id }}">

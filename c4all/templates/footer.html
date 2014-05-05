@@ -5,12 +5,12 @@
 
   <div class="help">
     <div class="action">
-        <a class="button-description popup-with-zoom-anim" href="#c4all-rules">{% trans "What you can write" %}</a>
-        <a class="button popup-with-zoom-anim" href="#c4all-rules" title="{% trans "Read rules" %}">
+        <a class="button-description popup-with-zoom-anim" href="#c4all-rules" role="button">{% trans "What you can write" %}</a>
+        <a class="button popup-with-zoom-anim" href="#c4all-rules" title="{% trans "Read rules" %}" role="button">
             <i class="icon icon-ll"></i>
             <span class="button-label">{% trans "Read rules" %}</span>
         </a>
-        <a class="button popup-with-zoom-anim" href="#c4all-rules-video" title="{% trans "See video with rules" %}">
+        <a class="button popup-with-zoom-anim" href="#c4all-rules-video" title="{% trans "See video with rules" %}" role="button">
             <i class="icon icon-sign-language"></i>
             <span class="button-label">{% trans "See video with rules" %}</span>
         </a>
@@ -102,8 +102,8 @@
     </div>
 
       <div class="field field-comment">
-          <label for="input-textarea">{% trans "Enter comment" %}</label>
-          <div id="comment-input-ceditable" contenteditable="true" class="textarea"></div>
+          <label id="comment-input-ceditable-label" for="input-textarea">{% trans "Enter comment" %}</label>
+          <div id="comment-input-ceditable" contenteditable="true" class="textarea" aria-labelledby="comment-input-ceditable-id"></div>
       </div>
 
 </fieldset>
@@ -154,7 +154,7 @@
 
     <div class="account-info">
         <h3>{% trans "Sign up" %}</h3>
-        <a id="login-switch" href="#" class="action-link"><i class="icon icon-arrow-right-alt"></i>{% trans "Or, Log in" %}</a>
+        <a id="login-switch" href="#" class="action-link" role="button"><i class="icon icon-arrow-right-alt"></i>{% trans "Or, Log in" %}</a>
         <p>{% trans "If you register, you can keep the same display name each time you comment." %}</p>
     </div>
 
@@ -178,7 +178,7 @@
         <div class="field">
             <label for="c4all-email">{% trans "E-mail" %}</label>
             <div class="group">
-                <input type="text" id="c4all-email" name="email">
+                <input type="email" id="c4all-email" name="email">
             </div>
         </div>
         <div class="field">
@@ -199,7 +199,7 @@
             </button>
         </div>
         <div class="field field-action">
-            <a class="action-link c4all_cancel_login" href="#"><i class="icon icon-arrow-right-alt"></i>{% trans "Cancel" %}</a>
+            <a class="action-link c4all_cancel_login" href="#" role="button"><i class="icon icon-arrow-right-alt"></i>{% trans "Cancel" %}</a>
         </div>
     </div>
 
@@ -212,14 +212,14 @@
 
     <div class="account-info">
         <h3>{% trans "Log in" %}</h3>
-        <a id="signup-switch" href="#" class="action-link"><i class="icon icon-arrow-right-alt"></i>{% trans "Or, Sign up" %}</a>
+        <a id="signup-switch" href="#" class="action-link" role="button"><i class="icon icon-arrow-right-alt"></i>{% trans "Or, Sign up" %}</a>
     </div>
 
     <div class="field-group label-left login-register-box login-box">
         <div class="field">
             <label for="c4all-email">{% trans "E-mail" %}</label>
             <div class="group">
-                <input type="text" id="c4all-email" name="email">
+                <input type="email" id="c4all-email" name="email">
             </div>
         </div>
         <div class="field">
@@ -234,7 +234,7 @@
             </button>
         </div>
         <div class="field field-action">
-            <a class="action-link c4all_cancel_login" href="#" ><i class="icon icon-arrow-right-alt"></i>{% trans "Cancel" %}</a>
+            <a class="action-link c4all_cancel_login" href="#" role="button"><i class="icon icon-arrow-right-alt"></i>{% trans "Cancel" %}</a>
         </div>
     </div>
 
@@ -271,7 +271,7 @@
             </button>
         </div>
         <div class="field field-action secondary">
-            <a class="action-link" href="#" id="c4all_logout"><i class="icon icon-arrow-right-alt"></i>{% trans "Logout" %}</a>
+            <a class="action-link" href="#" id="c4all_logout" role="button"><i class="icon icon-arrow-right-alt"></i>{% trans "Logout" %}</a>
         </div>
       </div>
 
