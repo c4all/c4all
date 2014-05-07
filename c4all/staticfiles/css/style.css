@@ -571,6 +571,7 @@
 }
 #c4all-widget-container .comment .comment-body {
   padding: 10px 10px 38px 10px;
+  word-wrap: break-word;
 }
 #c4all-widget-container .comment .comment-body p {
   font-size: 15px;
