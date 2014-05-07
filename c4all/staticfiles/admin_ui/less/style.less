@@ -258,6 +258,19 @@ form {
 .icon-arrow-left:before         {content: "\e60f"; }
 .icon-arrow-left-double:before  {content: "\e610"; }
 
+/* Image emoticons */
+img.icon {
+	display: inline-block;
+	vertical-align: middle;
+	background: url(../assets/art/elements.png) no-repeat 0 0;
+}
+
+img.icon-heart              { background-position: 0 0; }
+img.icon-smiley-laughing    { background-position: 0 -40px; }
+img.icon-smiley-happy       { background-position: 0 -80px; }
+img.icon-smiley-indifferent { background-position: 0 -120px; }
+img.icon-smiley-sad         { background-position: 0 -160px; }
+img.icon-smiley-angry       { background-position: 0 -200px; }
 
 /* ==================================================
     =Layout
@@ -766,4 +779,21 @@ form {
 	.button, button {
 		&.naked { color: #fff; }
 	}
+}
+
+/* ==================================================
+    =High def devices
+===================================================== */
+
+// Source https://gist.github.com/3446599
+@media	only screen and (min-device-pixel-ratio: 1.3),
+		only screen and (-webkit-min-device-pixel-ratio: 1.3),
+		only screen and (-o-min-device-pixel-ratio: 13/10),
+		only screen and (min-resolution: 120dpi) {
+
+	img.icon
+		background-image: url(../assets/art/elements_2x.png);
+		background-size: 1000px 500px;
+	}
+
 }
