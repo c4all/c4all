@@ -240,29 +240,31 @@ form {
 	-moz-osx-font-smoothing: grayscale;
 }
 
-.icon-smiley-sad:before         {content: "\e600"; }
-.icon-smiley-laughing:before    {content: "\e601"; }
-.icon-smiley-indifferent:before {content: "\e602"; }
-.icon-smiley-happy:before       {content: "\e603"; }
-.icon-smiley-angry:before       {content: "\e604"; }
-.icon-ll:before                 {content: "\e605"; }
-.icon-listen:before             {content: "\e606"; }
-.icon-heart:before              {content: "\e607"; }
-.icon-comment:before            {content: "\e608"; }
-.icon-video:before              {content: "\e609"; }
-.icon-thumb-up:before           {content: "\e60a"; }
-.icon-thumb-down:before         {content: "\e60b"; }
-.icon-spellcheck:before         {content: "\e60c"; }
-.icon-arrow-right:before        {content: "\e60d"; }
-.icon-arrow-right-double:before {content: "\e60e"; }
-.icon-arrow-left:before         {content: "\e60f"; }
-.icon-arrow-left-double:before  {content: "\e610"; }
+.icon-smiley-sad:before         { content: "\e600"; }
+.icon-smiley-laughing:before    { content: "\e601"; }
+.icon-smiley-indifferent:before { content: "\e602"; }
+.icon-smiley-happy:before       { content: "\e603"; }
+.icon-smiley-angry:before       { content: "\e604"; }
+.icon-ll:before                 { content: "\e605"; }
+.icon-listen:before             { content: "\e606"; }
+.icon-heart:before              { content: "\e607"; }
+.icon-comment:before            { content: "\e608"; }
+.icon-video:before              { content: "\e609"; }
+.icon-thumb-up:before           { content: "\e60a"; }
+.icon-thumb-down:before         { content: "\e60b"; }
+.icon-spellcheck:before         { content: "\e60c"; }
+.icon-arrow-right:before        { content: "\e60d"; }
+.icon-arrow-right-double:before { content: "\e60e"; }
+.icon-arrow-left:before         { content: "\e60f"; }
+.icon-arrow-left-double:before  { content: "\e610"; }
 
 /* Image emoticons */
 img.icon {
 	display: inline-block;
 	vertical-align: middle;
 	background: url(../assets/art/elements.png) no-repeat 0 0;
+	width: 32px;
+	height: 32px;
 }
 
 img.icon-heart              { background-position: 0 0; }
@@ -791,7 +793,7 @@ img.icon-smiley-angry       { background-position: 0 -200px; }
 		only screen and (-o-min-device-pixel-ratio: 13/10),
 		only screen and (min-resolution: 120dpi) {
 
-	img.icon
+	img.icon {
 		background-image: url(../assets/art/elements_2x.png);
 		background-size: 1000px 500px;
 	}
