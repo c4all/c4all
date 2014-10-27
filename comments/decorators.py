@@ -39,7 +39,6 @@ def cross_domain_post_response(func):
             "request_path": request.path,
             "iframeId": iframe_id,
         }
-
         return render(
             request,
             'post_response.html',

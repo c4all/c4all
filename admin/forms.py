@@ -54,6 +54,7 @@ class BulkActionForm(forms.Form):
         ('delete', _('Delete')),
         ('hide', _('Unpublish'))
     ]
+    site_id = forms.CharField(required=True)
     action = forms.ChoiceField(choices=BULK_ACTION_CHOICES)
 
 

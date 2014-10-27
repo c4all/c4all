@@ -1,5 +1,6 @@
 {% extends 'custom_admin/base.html' %}
 {% load i18n %}
+{% load custom_filters %}
 
 {% block users_url %}
     <li class="item-button is-active">
@@ -20,6 +21,17 @@
 
 {% endblock %}
 
+
+{% block selected_site_title %}
+    {% if selected_site %}
+        {{ selected_site.domain }}
+    {% endif %}
+{% endblock %}
+
+
+{% block filter_form %}
+    {% include "snippets/filter_form.html" with selected_option=selected_site objects=sites options_url_name="c4all_admin:get_users" %}
+{% endblock %}
 
 
 {% block page_title %}
@@ -59,18 +71,20 @@
                             </label>
                             <ul class="action-list">
                                 {% if not user.is_staff %}
-                                <li><a class="modify-user-anchor" href="" data-email={{ user.email }} data-name={{ user.get_full_name }} data-id={{ user.id }}>{% trans "Modify" %}</a></li>
+                                    {% if request.user.is_superuser %}
+                                    <li><a class="modify-user-anchor" href="" data-email={{ user.email }} data-name={{ user.get_full_name }} data-id={{ user.id }}>{% trans "Modify" %}</a></li>
+                                    {% endif %}
                                 {% endif %}
                                 <li>
-                                    {% if user.hidden %}
-                                        <a href="" class='btn-hide unhidden' data-url={% url "c4all_admin:unhide_user" user.id %}>{% trans "Reveal" %}</a>
-                                        <a href="" class='btn-hide hidden' data-url={% url "c4all_admin:hide_user" user.id %} hidden>{% trans "Hide" %}</a>
+                                    {% if user|hidden:selected_site.id %}
+                                        <a href="" class='btn-hide unhidden' data-url={% url "c4all_admin:unhide_user" selected_site.id user.id %}>{% trans "Reveal" %}</a>
+                                        <a href="" class='btn-hide hidden' data-url={% url "c4all_admin:hide_user" selected_site.id user.id %} hidden>{% trans "Hide" %}</a>
                                     {% else %}
-                                        <a href="" class='btn-hide unhidden' data-url={% url "c4all_admin:unhide_user" user.id %} hidden>{% trans "Reveal" %}</a>
-                                        <a href="" class='btn-hide hidden' data-url={% url "c4all_admin:hide_user" user.id %}>{% trans "Hide" %}</a>
+                                        <a href="" class='btn-hide unhidden' data-url={% url "c4all_admin:unhide_user" selected_site.id user.id %} hidden>{% trans "Reveal" %}</a>
+                                        <a href="" class='btn-hide hidden' data-url={% url "c4all_admin:hide_user" selected_site.id user.id %}>{% trans "Hide" %}</a>
                                     {% endif %}
                                 </li>
-                                <li class="item-delete"><a href="{% url 'c4all_admin:delete_user' user.id %}">{% trans "Delete" %}</a></li>
+                                <li class="item-delete"><a href="{% url 'c4all_admin:delete_user' selected_site.id user.id %}">{% trans "Delete" %}</a></li>
                             </ul>
                         </div>
                         <div class="col-email">

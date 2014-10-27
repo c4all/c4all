@@ -11,6 +11,7 @@ from datetime import timedelta, date
 
 User = get_user_model()
 
+
 class AdminThreadTestCases(TestCase):
     def setUp(self):
         self.admin = User.objects.create_superuser(
@@ -251,7 +252,6 @@ class AdminThreadTestCases(TestCase):
         self.assertEqual(threads[0].id, t2.id)
         self.assertEqual(threads[1].id, t1.id)
 
-
     def test_get_threads_returns_threads_from_site_with_lowest_id_if_site_id_not_provided(self):
         self.site_2 = Site.objects.create()
 
@@ -265,3 +265,89 @@ class AdminThreadTestCases(TestCase):
 
         self.assertTrue(t1 in threads)
         self.assertTrue(t2 not in threads)
+
+    def test_get_filtered_threads_admins_can_access(self):
+        self.site_2 = Site.objects.create()
+        t1 = Thread.objects.create(site=self.site, url='test_url')
+        t2 = Thread.objects.create(site=self.site_2, url='test_url_2')
+        self.client.login(email="donald@duck.com", password="password")
+
+        self.admin.is_superuser = False
+        self.admin.save()
+        self.assertFalse(self.admin.get_threads())
+
+        self.site.admins.add(self.admin)
+        num_of_threads = self.admin.get_threads().count()
+        self.assertEqual(num_of_threads, 1)
+        self.assertEqual(
+            self.admin.get_threads()[num_of_threads - 1].id, t1.id)
+
+        self.site_2.admins.add(self.admin)
+        self.site.admins.add(self.admin)
+        num_of_threads = self.admin.get_threads().count()
+        self.assertEqual(num_of_threads, 2)
+        self.assertEqual(
+            self.admin.get_threads()[num_of_threads - 2].id, t1.id)
+        self.assertEqual(
+            self.admin.get_threads()[num_of_threads - 1].id, t2.id)
+
+    def test_superuser_can_get_all_threads(self):
+        self.site_2 = Site.objects.create()
+        t1 = Thread.objects.create(site=self.site, url='test_url')
+        t2 = Thread.objects.create(site=self.site_2, url='test_url_2')
+        self.client.login(email="donald@duck.com", password="password")
+
+        self.site_2.admins.add(self.admin)
+        self.site.admins.add(self.admin)
+        num_of_threads = self.admin.get_threads().count()
+        self.assertEqual(num_of_threads, 2)
+        self.assertEqual(
+            self.admin.get_threads()[num_of_threads - 2].id, t1.id)
+        self.assertEqual(
+            self.admin.get_threads()[num_of_threads - 1].id, t2.id)
+
+    def test_get_filtered_comments_admins_can_access(self):
+        self.site_2 = Site.objects.create()
+        t1 = Thread.objects.create(site=self.site, url='test_url')
+        t2 = Thread.objects.create(site=self.site_2, url='test_url_2')
+        c1 = Comment.objects.create(thread=t1, hidden=True)
+        c2 = Comment.objects.create(thread=t2, hidden=True)
+        c3 = Comment.objects.create(thread=t2, hidden=True)
+
+        self.client.login(email="donald@duck.com", password="password")
+        self.admin.is_superuser = False
+        self.admin.save()
+        self.assertFalse(self.admin.get_comments())
+
+        self.site.admins.add(self.admin)
+        num_of_comments = self.admin.get_comments().count()
+        self.assertEqual(num_of_comments, 1)
+        self.assertEqual(
+            self.admin.get_comments()[num_of_comments - 1].id, c1.id)
+
+        self.site_2.admins.add(self.admin)
+        num_of_comments = self.admin.get_comments().count()
+        self.assertEqual(num_of_comments, 3)
+        self.assertEqual(
+            self.admin.get_comments()[num_of_comments - 3].id, c1.id)
+        self.assertEqual(
+            self.admin.get_comments()[num_of_comments - 2].id, c2.id)
+        self.assertEqual(
+            self.admin.get_comments()[num_of_comments - 1].id, c3.id)
+
+    def test_superuser_can_get_all_comments(self):
+        self.site_2 = Site.objects.create()
+        t1 = Thread.objects.create(site=self.site, url='test_url')
+        t2 = Thread.objects.create(site=self.site_2, url='test_url_2')
+        c1 = Comment.objects.create(thread=t1, hidden=True)
+        c2 = Comment.objects.create(thread=t2, hidden=True)
+        c3 = Comment.objects.create(thread=t2, hidden=True)
+
+        num_of_comments = self.admin.get_comments().count()
+        self.assertEqual(num_of_comments, 3)
+        self.assertEqual(
+            self.admin.get_comments()[num_of_comments - 3].id, c1.id)
+        self.assertEqual(
+            self.admin.get_comments()[num_of_comments - 2].id, c2.id)
+        self.assertEqual(
+            self.admin.get_comments()[num_of_comments - 1].id, c3.id)

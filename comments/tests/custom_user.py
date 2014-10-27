@@ -76,10 +76,10 @@ class CustomUserTestCase(BaseTestCase):
             email="donald@duck.com",
             password="pass",
         )
-        self.assertFalse(user.hidden)
-        user.hide()
-        self.assertTrue(user.hidden)
-
+        site = Site.objects.create(domain='www.google.com')
+        self.assertFalse(user.hidden.filter(id=site.id))
+        user.hide(site)
+        self.assertTrue(user.hidden.filter(id=site.id))
 
     def test_hide_admin_doesnt_change_hidden_state(self):
         """
@@ -91,10 +91,11 @@ class CustomUserTestCase(BaseTestCase):
             email="donald@duck.com",
             password="pass",
         )
-        self.assertFalse(user.hidden)
-        user.hide()
+        site = Site.objects.create(domain='www.google.com')
+        self.assertFalse(user.hidden.filter(id=site.id))
+        user.hide(site)
 
-        self.assertFalse(user.hidden)
+        self.assertFalse(user.hidden.filter(id=site.id))
 
     def test_unhide_user_is_success(self):
         """
@@ -105,12 +106,13 @@ class CustomUserTestCase(BaseTestCase):
             email="donald@duck.com",
             password="pass",
         )
-        user.hidden = True
+        site = Site.objects.create(domain='www.google.com')
+        user.hidden.add(site)
         user.save()
 
-        user.unhide()
-
-        self.assertFalse(user.hidden)
+        self.assertTrue(user.hidden.filter(id=site.id))
+        user.unhide(site)
+        self.assertFalse(user.hidden.filter(id=site.id))
 
     def test_unhide_admin_is_success(self):
         """
@@ -122,14 +124,15 @@ class CustomUserTestCase(BaseTestCase):
             email="donald@duck.com",
             password="pass",
         )
-        user.hidden = True
+        site = Site.objects.create(domain='www.google.com')
+        user.hide(site)
         user.save()
 
-        user.unhide()
+        user.unhide(site)
 
-        self.assertFalse(user.hidden)
+        self.assertFalse(user.hidden.filter(id=site.id))
 
-    def test_delete_method_deletes_user(self):
+    def test_delete_method_deletes_user_comments(self):
         """
         Tests custom delete method in CustomUser model.
         """
@@ -137,19 +140,23 @@ class CustomUserTestCase(BaseTestCase):
             email="donald@duck.com",
             password="pass"
         )
-        u2 = CustomUser.objects.create_user(
+        CustomUser.objects.create_user(
             email="daffy@duck.com",
             password="pass"
         )
 
-        u1.delete()
+        site = Site.objects.create(domain='www.google.com')
+        thread = Thread.objects.create(site=site, url='url')
+        Comment.objects.create(thread=thread, user=u1, text='aaa')
 
         users = CustomUser.objects.all()
+        self.assertEqual(users.count(), 2)
+        self.assertEqual(Comment.objects.get(user=u1).user, u1)
+        u1.delete()
         self.assertEqual(users.count(), 1)
-        user = users[0]
-        self.assertEqual(u2.id, user.id)
+        self.assertFalse(Comment.objects.exists())
 
-    def test_delete_method_doesnt_delete_admin(self):
+    def test_delete_method_doesnt_delete_admin_user(self):
         """
         Tests custom delete method in CustomUser model. Method should not
         be able to delete user who is staff member.
@@ -159,12 +166,14 @@ class CustomUserTestCase(BaseTestCase):
             password="pass"
         )
 
-        u1.delete()
+        site = Site.objects.create(domain='www.google.com')
+        thread = Thread.objects.create(site=site, url='url')
+        Comment.objects.create(thread=thread, user=u1, text='aaa')
 
         users = CustomUser.objects.all()
         self.assertEqual(users.count(), 1)
-        user = users[0]
-        self.assertEqual(u1.id, user.id)
+        u1.delete()
+        self.assertEqual(users.count(), 1)
 
     def test_delete_method_deletes_users_comments(self):
         """
@@ -325,8 +334,10 @@ class LoginEndpointTestCase(BaseTestCase):
         password = 'pass'
 
         CustomUser.objects.create_user(email, password)
+        site = Site.objects.create(domain='www.google.com')
 
         r = self.client.post(self.endpoint_url, data={
+            'site_id': site.id,
             'email': email,
             'password': password,
         })
@@ -405,8 +416,10 @@ class LoginEndpointTestCase(BaseTestCase):
 
         CustomUser.objects.create_user(email, password)
         iframeId = 'some_donald_duck_id_123'
+        site = Site.objects.create(domain='www.google.com')
 
         r = self.client.post(self.endpoint_url, data={
+            'site_id': site.id,
             'email': email,
             'password': password,
             'iframeId': iframeId,

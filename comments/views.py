@@ -102,14 +102,12 @@ def set_avatar_image(request):
 @cross_domain_post_response
 def login_user(request):
     form = RegularUserLoginForm(request.POST)
-
     if not form.is_valid():
         return HttpResponseBadRequest(
             _("Submitted data not valid.")
         )
     user = form.get_user()
     login(request, user)
-
     data = user.get_user_domain_data()
     request.session.update(data)
 
@@ -121,17 +119,19 @@ def login_user(request):
 @cross_domain_post_response
 def comment(request):
     form = PostCommentForm(request.POST, request)
-
     if not form.is_valid():
         data = {'placement': 'comments_container', 'content': form.errors}
         return HttpResponseBadRequest(json.dumps(data))
     else:
+        site = Site.objects.get(domain=form.cleaned_data['domain'])
+        if not request.user.is_anonymous():
+            if request.user.hidden.filter(id=site.id):
+                return HttpResponseBadRequest(
+                    _("User doesn't have permissions to post to this site."))
         new_comment = form.save()
 
     posted = add_to_session_list(request, 'posted_comments', new_comment.id)
     comments = form.cleaned_data['thread'].comments.all()
-
-    site = Site.objects.get(domain=form.cleaned_data['domain'])
 
     request.session['all_comments'] = True
 
@@ -165,6 +165,12 @@ def like_comment(request, comment_id):
     except Comment.DoesNotExist as e:
         data = {'placement': 'comments_container', 'content': str(e)}
         return HttpResponseNotFound(json.dumps(data))
+
+    if not request.user.is_anonymous():
+        if request.user.hidden.filter(id=comment.thread.site.id):
+            return HttpResponseBadRequest(
+                _('user is disabled on site with id %s') % comment.thread.site.id
+            )
 
     liked_comments = request.session.get('liked_comments', [])
     disliked_comments = request.session.get('disliked_comments', [])
@@ -211,6 +217,12 @@ def dislike_comment(request, comment_id):
         data = {'placement': 'comments_container', 'content': str(e)}
         return HttpResponseNotFound(json.dumps(data))
 
+    if not request.user.is_anonymous():
+        if request.user.hidden.filter(id=comment.thread.site.id):
+            return HttpResponseBadRequest(
+                _('user is disabled on site with id %s') % comment.thread.site.id
+            )
+
     liked_comments = request.session.get('liked_comments', [])
     disliked_comments = request.session.get('disliked_comments', [])
 
@@ -249,18 +261,22 @@ def dislike_comment(request, comment_id):
 @csrf_exempt
 @cross_domain_post_response
 def hide_comment(request, comment_id):
-    if not request.user.is_staff:
-        data = {
-            'placement': 'comments_container',
-            'content': _("User not staff")
-        }
-        return HttpResponseForbidden(json.dumps(data))
-
     try:
         comment = Comment.objects.get(id=comment_id)
     except Comment.DoesNotExist as e:
         data = {'placement': 'comments_container', 'content': str(e)}
         return HttpResponseNotFound(json.dumps(data))
+
+    if request.user.is_anonymous():
+        site_admin = False
+    else:
+        site_admin = bool(request.user.get_comments(comment_id))
+    if not site_admin:
+        data = {
+            'placement': 'comments_container',
+            'content': _("User not staff")
+        }
+        return HttpResponseForbidden(json.dumps(data))
 
     comment.hide()
 
@@ -289,18 +305,22 @@ def hide_comment(request, comment_id):
 @csrf_exempt
 @cross_domain_post_response
 def unhide_comment(request, comment_id):
-    if not request.user.is_staff:
-        data = {
-            'placement': 'comments_container',
-            'content': _("User not staff")
-        }
-        return HttpResponseForbidden(json.dumps(data))
-
     try:
         comment = Comment.objects.get(id=comment_id)
     except Comment.DoesNotExist as e:
         data = {'placement': 'comments_container', 'content': str(e)}
         return HttpResponseNotFound(json.dumps(data))
+
+    if request.user.is_anonymous():
+        site_admin = False
+    else:
+        site_admin = bool(request.user.get_comments(comment_id))
+    if not site_admin:
+        data = {
+            'placement': 'comments_container',
+            'content': _("User not staff")
+        }
+        return HttpResponseForbidden(json.dumps(data))
 
     comment.unhide()
 
@@ -338,6 +358,12 @@ def like_thread(request, thread_id):
         }
         return HttpResponseNotFound(json.dumps(data))
 
+    if not request.user.is_anonymous():
+        if request.user.hidden.filter(id=thread.site.id):
+            return HttpResponseBadRequest(
+                _('user is disabled on site with id %s') % thread.site.id
+            )
+
     liked_threads = request.session.get('liked_threads', [])
     disliked_threads = request.session.get('disliked_threads', [])
 
@@ -373,6 +399,11 @@ def dislike_thread(request, thread_id):
         }
         return HttpResponseNotFound(json.dumps(data))
 
+    if not request.user.is_anonymous():
+        if request.user.hidden.filter(id=thread.site.id):
+            return HttpResponseBadRequest(
+                _('user is disabled on site with id %s') % thread.site.id
+            )
     liked_threads = request.session.get('liked_threads', [])
     disliked_threads = request.session.get('disliked_threads', [])
 
@@ -410,6 +441,11 @@ def get_comments(request):
 
     try:
         site = Site.objects.get(domain=domain_name)
+        if not request.user.is_anonymous():
+            if request.user.hidden.filter(id=site.id):
+                return HttpResponseBadRequest(
+                    _('user is disabled on site with id %s') % site.id
+                )
     except Site.DoesNotExist:
         return HttpResponseBadRequest(
             'domain with name %s does not exist' % domain_name
@@ -423,20 +459,26 @@ def get_comments(request):
     thread, created = site.threads.get_or_create(id=thread_id)
 
     posted_comments = request.session.get('posted_comments', [])
-
     all_comments = request.GET.get('all', False)
     if all_comments:
         request.session['all_comments'] = True
 
+    if request.user.is_anonymous():
+        site_admin = False
+    else:
+        site_admin = request.user.is_site_admin(domain_name)
+
+    comments = thread.comments.exclude(user__hidden__in=[site]).distinct()
     resp = render(
         request,
         "comments.html",
         {
-            'comments': thread.comments.all(),
+            'comments': comments,
             'posted_comments': posted_comments,
             'last_posted_comment_id': posted_comments[-1] if posted_comments else None,
             'rs_customer_id': site.rs_customer_id,
             'all_comments': all_comments,
+            'site_admin': site_admin
         }
     )
 
@@ -571,6 +613,7 @@ def incorrect_words(request):
     data = {'data': [errors]}
 
     return HttpResponse(json.dumps(data))
+
 
 @require_POST
 @csrf_exempt
