@@ -11,8 +11,8 @@
 
             <form action="{% url 'c4all_admin:login_admin' %}" method="post" class="login-form">{% csrf_token %}
 
+                <strong class="admin-error">{{ form.non_field_errors }}</strong>
                 <fieldset>
-
                     <div class="field">
                         <label for="id_email">{% trans "Email" %}</label>
                         <strong class="admin-error">{{ form.email.errors }}</strong>

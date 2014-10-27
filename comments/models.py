@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Q
 from django.contrib.auth.models import (
     BaseUserManager, AbstractBaseUser, PermissionsMixin
 )
@@ -59,7 +60,8 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
     objects = CustomUserManager()
     avatar_num = models.IntegerField(default=6)  # green diamond
-    hidden = models.BooleanField(default=False)
+    hidden = models.ManyToManyField(
+        'Site', null=True, blank=True, related_name='hidden_users')
     created = models.DateTimeField(auto_now_add=True)
 
     def get_full_name(self):
@@ -99,7 +101,46 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
             'disliked_comments': disliked_comments
         }
 
-    def hide(self):
+    def is_site_admin(self, domain_name):
+        if self.is_superuser:
+            return True
+        if self.is_staff and self.site_set.filter(domain=domain_name):
+            return True
+        return False
+
+    def get_sites(self):
+        if self.is_superuser:
+            return Site.objects.all()
+        return self.site_set.all()
+
+    def get_threads(self, thread_id=None):
+        q = Q()
+        if not self.is_superuser:
+            q = q & Q(site__in=self.get_sites())
+        if thread_id:
+            q = q & Q(id=thread_id)
+        threads = Thread.objects.filter(q)
+        return threads
+
+    def get_comments(self, comment_id=None):
+        q = Q()
+        if not self.is_superuser:
+            q = q & Q(thread__site__in=self.get_sites())
+        if comment_id:
+            q = q & Q(id=comment_id)
+        comments = Comment.objects.filter(q)
+        return comments
+
+    def get_users(self, user_id=None):
+        q = Q(is_staff=False)
+        if not self.is_superuser:
+            q = q & Q(comments__thread__site__in=self.get_sites())
+        if user_id:
+            q = q & Q(id=user_id)
+        users = CustomUser.objects.filter(q).distinct()
+        return users
+
+    def hide(self, site):
         """
         Sets hidden flag to True. Only non staff users can be hidden using
         this method. Hiding the user disables login and therefore posting
@@ -107,32 +148,33 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         """
         if self.is_staff:
             return
-
-        self.hidden = True
+        self.hidden.add(site)
         self.save()
 
-    def unhide(self):
+    def unhide(self, site):
         """
         Sets hidden flag to False. Unhiding user enables login and posting
         comments.
         """
-        self.hidden = False
+        self.hidden.remove(site)
         self.save()
 
     def delete(self):
         """
-        Deletes user from database. Only non-staff users can be deleted. Along
-        with user data, deletes any comments user has made.
+        Deletes user comments from database. Only non-staff comments can be
         """
         if self.is_staff:
             return
-
-        self.comments.all().delete()
         super(CustomUser, self).delete()
 
 
 class Site(models.Model):
     domain = models.CharField(null=False, max_length=255)
+    admins = models.ManyToManyField(
+        CustomUser, null=True, blank=True, limit_choices_to={
+            'is_superuser': False,
+            'is_staff': True
+        })
     anonymous_allowed = models.BooleanField(default=False)
     rs_customer_id = models.CharField(max_length=255, null=True, blank=True)
 
@@ -346,7 +388,7 @@ class Comment(models.Model):
 
     def delete(self, user):
         """
-        Deletes comment if user is staff/admin.
+        Deletes comment if user is staff/admin or admin for site.
         """
         if user.is_staff:
             super(Comment, self).delete()

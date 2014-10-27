@@ -10,8 +10,8 @@ from comments.models import Thread, Comment, CustomUser, Site
 from comments.forms import StaffUserLoginForm
 from admin.decorators import admin_required, ajax_required
 from admin.paginator import paginate_data
-from admin.forms import (IntervalSelectionForm, UserBulkActionForm,
-    CommentBulkActionForm)
+from admin.forms import (
+    IntervalSelectionForm, UserBulkActionForm, CommentBulkActionForm)
 
 import json
 
@@ -49,7 +49,8 @@ def change_password(request, user_id):
     form = AdminPasswordChangeForm(user, data=request.POST or None)
 
     if form.is_valid():
-        form.save()
+        if request.user.is_superuser:
+            form.save()
 
     resp = render(
         request,
@@ -72,9 +73,12 @@ def threads(request, site_id=None):
     provided, threads from first site in DB are returned.
     """
     site = None
-    sites = Site.objects.all()
+    sites = request.user.get_sites()
 
     if site_id:
+        site = get_object_or_404(sites, id=site_id)
+    elif request.session.get('last_site_id'):
+        site_id = request.session['last_site_id']
         site = get_object_or_404(sites, id=site_id)
     else:
         site = sites[0] if sites.exists() else None
@@ -85,7 +89,8 @@ def threads(request, site_id=None):
     if interval_selection_form.is_valid():
         date = interval_selection_form.get_date()
 
-    thread_list = Thread.objects.all().annotate(max_comment_date=Max('comments__created'))
+    thread_list = Thread.objects.filter(site__in=sites).annotate(
+        max_comment_date=Max('comments__created'))
 
     if date:
         thread_list = thread_list.filter(created__gte=date)
@@ -106,10 +111,10 @@ def threads(request, site_id=None):
 
         thread_list = list_thread_list
 
-
     threads = paginate_data(request, thread_list)
 
-    request.session['last_site_id'] = site.id
+    if site:
+        request.session['last_site_id'] = site.id
 
     return render(
         request,
@@ -130,9 +135,10 @@ def comments(request, thread_id):
     Returns all comments for thread with thread_id. If hidden param is true,
     returns only hidden comments for aforementioned thread.
     """
-    thread = get_object_or_404(Thread, id=thread_id)
-    hidden = request.GET.get('hidden', False)
+    threads = request.user.get_threads()
+    thread = get_object_or_404(threads, id=thread_id)
 
+    hidden = request.GET.get('hidden', False)
     comments_list = thread.comments.all()
 
     if hidden:
@@ -162,7 +168,7 @@ def comments(request, thread_id):
 @require_POST
 @ajax_required
 def hide_comment(request, comment_id):
-    comment = get_object_or_404(Comment, id=comment_id)
+    comment = get_object_or_404(request.user.get_comments(), id=comment_id)
     comment.hide()
 
     return HttpResponse(
@@ -175,7 +181,7 @@ def hide_comment(request, comment_id):
 @require_POST
 @ajax_required
 def unhide_comment(request, comment_id):
-    comment = get_object_or_404(Comment, id=comment_id)
+    comment = get_object_or_404(request.user.get_comments(), id=comment_id)
     comment.unhide()
 
     return HttpResponse(
@@ -183,9 +189,10 @@ def unhide_comment(request, comment_id):
         content_type="application/json"
     )
 
+
 @admin_required
 def delete_comment(request, comment_id):
-    comment = get_object_or_404(Comment, id=comment_id)
+    comment = get_object_or_404(request.user.get_comments(), id=comment_id)
 
     comment.delete(request.user)
 
@@ -193,23 +200,36 @@ def delete_comment(request, comment_id):
 
 
 @admin_required
-def users(request):
+def users(request, site_id):
     """
     Returns all users if hidden parameter not provided, hidden users if
     hidden parameter is True.
     """
+    site = None
+    sites = request.user.get_sites()
+
+    if site_id:
+        site = get_object_or_404(sites, id=site_id)
+    elif request.session.get('last_site_id'):
+        site_id = request.session['last_site_id']
+        site = get_object_or_404(sites, id=site_id)
+    else:
+        site = sites[0] if sites.exists() else None
+
     hidden = request.GET.get('hidden', False)
-    user_list = CustomUser.objects.filter(is_staff=False)
+    user_list = request.user.get_users()
+    if site:
+        user_list = user_list.filter(comments__thread__site=site)
+        request.session['last_site_id'] = site.id
 
-    if hidden:
-        user_list = user_list.filter(hidden=hidden)
+    if hidden and site:
+        user_list = user_list.filter(hidden__in=[site])
 
-    hidden_users_count = user_list.filter(hidden=True).count()
+    hidden_users_count = user_list.filter(hidden__in=[site]).count()
 
     users = paginate_data(request, user_list)
 
     bulk_action_form = UserBulkActionForm()
-
     return render(
         request,
         "custom_admin/users.html",
@@ -218,6 +238,8 @@ def users(request):
             "hidden_users_count": hidden_users_count,
             "bulk_action_form": bulk_action_form,
             "pagination_objects_name": _("users"),
+            "sites": sites,
+            "selected_site": site,
         }
     )
 
@@ -233,12 +255,16 @@ def user_bulk_actions(request):
 
     if form.is_valid():
         cd = form.cleaned_data
+        site = get_object_or_404(Site, id=form.cleaned_data['site_id'])
 
         if cd['action'] == 'delete':
-            CustomUser.objects.bulk_delete(cd['choices'], is_staff=False)
-        else:
-            CustomUser.objects.filter(
-                id__in=cd['choices'], is_staff=False).update(hidden=True)
+            users = cd['choices'].filter(
+                id__in=request.user.get_users(), is_staff=False)
+            Comment.objects.filter(user__id__in=users).delete()
+        if cd['action'] == 'hide':
+            users = cd['choices'].filter(id__in=request.user.get_users())
+            for user in users:
+                user.hidden.add(site)
 
     return redirect("c4all_admin:get_users")
 
@@ -254,12 +280,12 @@ def comment_bulk_actions(request, thread_id):
 
     if form.is_valid():
         cd = form.cleaned_data
-
+        comments = cd['choices'].filter(id__in=request.user.get_comments())
         if cd['action'] == 'delete':
-            Comment.objects.bulk_delete(cd['choices'])
-        else:
+            Comment.objects.bulk_delete(comments)
+        if cd['action'] == 'hide':
             Comment.objects.filter(
-                id__in=cd['choices']).update(hidden=True)
+                id__in=comments).update(hidden=True)
 
     return redirect("c4all_admin:get_thread_comments", thread_id)
 
@@ -267,13 +293,16 @@ def comment_bulk_actions(request, thread_id):
 @admin_required
 @require_POST
 @ajax_required
-def hide_user(request, user_id):
+def hide_user(request, site_id, user_id):
     """
-    Endpoint which handles user hiding. If provided user id doesn't exist or
-    identifies staff member, 404 response is returned.
+    Endpoint which handles user hiding. If provided user or site id doesn't
+    exist or identifies staff member, 404 response is returned.
     """
-    user = get_object_or_404(CustomUser, id=user_id, is_staff=False)
-    user.hide()
+    user = get_object_or_404(
+        request.user.get_users(), id=user_id, is_staff=False)
+    site = get_object_or_404(
+        request.user.get_sites(), id=site_id)
+    user.hide(site)
 
     return HttpResponse(
         json.dumps({'state': 'hidden'}),
@@ -284,13 +313,16 @@ def hide_user(request, user_id):
 @admin_required
 @require_POST
 @ajax_required
-def unhide_user(request, user_id):
+def unhide_user(request, site_id, user_id):
     """
-    Endpoint which handles user unhiding. If provided user id doesn't exist or
-    identifies staff member, 404 response is returned.
+    Endpoint which handles user unhiding. If provided user or site id doesn't
+    exist or identifies staff member, 404 response is returned.
     """
-    user = get_object_or_404(CustomUser, id=user_id, is_staff=False)
-    user.unhide()
+    user = get_object_or_404(
+        request.user.get_users(), id=user_id, is_staff=False)
+    site = get_object_or_404(
+        request.user.get_sites(), id=site_id)
+    user.unhide(site)
 
     return HttpResponse(
         json.dumps({'state': 'unhidden'}),
@@ -299,14 +331,14 @@ def unhide_user(request, user_id):
 
 
 @admin_required
-def delete_user(request, user_id):
+def delete_user(request, site_id, user_id):
     """
-    Endpoint for user deletion. All user data is erased from DB along with
-    any posted comments that user scheduled for deletion has made. Redirects
-    to all users endpoint.
+    Endpoint for user deletion. All user comments for site are erased from
+    DB. Redirects to all users endpoint.
     """
-    user = get_object_or_404(CustomUser, id=user_id, is_staff=False)
-
-    user.delete()
+    user = get_object_or_404(
+        request.user.get_users(), id=user_id, is_staff=False)
+    comments = user.comments.filter(thread__site__id=site_id)
+    comments.delete()
 
     return redirect("c4all_admin:get_users")

@@ -13,8 +13,8 @@ User = get_user_model()
 class AdminCommentTestCases(TestCase):
 
     def setUp(self):
-        site = Site.objects.create()
-        self.thread = Thread.objects.create(site=site)
+        self.site = Site.objects.create()
+        self.thread = Thread.objects.create(site=self.site)
 
         self.admin = User.objects.create_superuser(
             "donald@duck.com",
@@ -139,6 +139,7 @@ class AdminCommentTestCases(TestCase):
         resp = self.client.post(
             reverse("c4all_admin:comment_bulk_actions", args=[self.thread.id]),
             {
+                "site_id": self.site.id,
                 "action": ["delete"],
                 "choices": [c1.id, c2.id]
             }
@@ -157,6 +158,7 @@ class AdminCommentTestCases(TestCase):
         resp = self.client.post(
             reverse("c4all_admin:comment_bulk_actions", args=[self.thread.id]),
             {
+                "site_id": self.site.id,
                 "action": ["hide"],
                 "choices": [c1.id, c2.id]
             }
@@ -174,6 +176,7 @@ class AdminCommentTestCases(TestCase):
         resp = self.client.post(
             reverse("c4all_admin:comment_bulk_actions", args=[self.thread.id]),
             {
+                "site_id": self.site.id,
                 "action": ["hide"],
                 "choices": [c.id]
             }
@@ -183,3 +186,46 @@ class AdminCommentTestCases(TestCase):
         comments = Comment.objects.filter(hidden=True)
         self.assertEqual(comments.count(), 1)
         self.assertTrue(c in comments)
+
+    def test_delete_user_deletes_comments_of_user_of_specified_site(self):
+        self.user = User.objects.create_user(
+            "scrooge@duck.com",
+            "password",
+        )
+
+        self.client.login(email="donald@duck.com", password="password")
+        Comment.objects.create(
+            thread=self.thread, user=self.user, hidden=True)
+        self.assertEqual(Comment.objects.filter(user=self.user.id).count(), 1)
+
+        r = self.client.post(
+            reverse('c4all_admin:delete_user', args=(
+                self.site.id, self.user.id, )),
+        )
+        self.assertEqual(r.status_code, 302)
+        users = User.objects.all()
+        self.assertEqual(users.count(), 2)
+        users = users.filter(id=self.user.id)
+        self.assertEqual(users.count(), 1)
+        self.assertFalse(Comment.objects.filter(user=self.user.id))
+
+    def test_user_delete_returns_404_for_nonexisting_user(self):
+        """
+        Tests endpoint which serves for deleting comments. If non existent user
+        id is provided, endpoint should return 404 response.
+        """
+        r = self.client.post(
+            reverse('c4all_admin:delete_user', args=(self.site.id, 9999, )),
+        )
+        self.assertEqual(r.status_code, 404)
+
+    def test_user_delete_returns_404_for_admin(self):
+        """
+        Tests endpoint which serves for deleting users. If admin user id
+        is provided, endpoint should return 404 response.
+        """
+        r = self.client.post(
+            reverse('c4all_admin:delete_user', args=(
+                self.site.id, self.admin.id, )),
+        )
+        self.assertEqual(r.status_code, 404)

@@ -33,6 +33,7 @@ class UserLoginForm(forms.Form):
 
 
 class RegularUserLoginForm(UserLoginForm):
+    site_id = forms.CharField(required=True, widget=forms.HiddenInput())
 
     def clean(self):
         super(RegularUserLoginForm, self).clean()
@@ -40,7 +41,7 @@ class RegularUserLoginForm(UserLoginForm):
         if not self.user:
             return self.cleaned_data
 
-        if self.user.hidden:
+        if self.user.hidden.filter(id__in=[self.cleaned_data['site_id']]):
             raise forms.ValidationError(_("user hidden"))
 
         return self.cleaned_data
@@ -59,6 +60,11 @@ class StaffUserLoginForm(UserLoginForm):
 
         if not self.user.is_staff:
             raise forms.ValidationError(_("user not staff"))
+
+        if not self.user.get_sites().count():
+            raise forms.ValidationError(
+                _("user is not admin for any site, log in as \
+                    superuser to assign the user to a site"))
 
         return self.cleaned_data
 
@@ -186,6 +192,11 @@ class PostCommentForm(forms.ModelForm):
 
         try:
             site = Site.objects.get(domain=domain)
+            if not self.user.is_anonymous():
+                if self.user.hidden.filter(id=site.id):
+                    raise forms.ValidationError(
+                        _('user is disabled on site with id %s') % site.id
+                    )
             site.threads.get(id=thread.id)
         except Thread.DoesNotExist:
             raise forms.ValidationError(
@@ -193,7 +204,6 @@ class PostCommentForm(forms.ModelForm):
             )
 
         return self.cleaned_data
-
 
     def save(self, *args, **kwargs):
         comment = super(PostCommentForm, self).save(
@@ -210,7 +220,6 @@ class PostCommentForm(forms.ModelForm):
         comment.save()
 
         return comment
-
 
 
 class GetRequestValidationForm(forms.Form):

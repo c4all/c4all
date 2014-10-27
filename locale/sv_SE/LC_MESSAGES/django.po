@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-04-10 16:07+0200\n"
+"POT-Creation-Date: 2014-10-20 17:16+0200\n"
 "PO-Revision-Date: 2014-04-10 16:07+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -34,25 +34,25 @@ msgid "This Month"
 msgstr "Den här månaden"
 
 #: admin/forms.py:54 c4all/templates/custom_admin/comments.html:84
-#: c4all/templates/custom_admin/users.html:73
+#: c4all/templates/custom_admin/users.html:87
 msgid "Delete"
 msgstr "Radera"
 
-#: admin/forms.py:55 c4all/templates/custom_admin/users.html:67
-#: c4all/templates/custom_admin/users.html:70
-msgid "Hide"
-msgstr "Göm"
+#: admin/forms.py:55 c4all/templates/custom_admin/comments.html:78
+#: c4all/templates/custom_admin/comments.html:81
+msgid "Unpublish"
+msgstr "Avpublicera"
 
-#: admin/views.py:117
+#: admin/views.py:127
 msgid "articles"
 msgstr "artiklar"
 
-#: admin/views.py:151 c4all/templates/comments.html:8
+#: admin/views.py:162 c4all/templates/comments.html:8
 #: c4all/templates/custom_admin/threads.html:75
 msgid "comments"
 msgstr "kommentarer"
 
-#: admin/views.py:215
+#: admin/views.py:240
 msgid "users"
 msgstr "användare"
 
@@ -64,7 +64,7 @@ msgstr "kommentar"
 msgid "View all comments"
 msgstr "Visa alla kommentarerna"
 
-#: c4all/templates/comments.html:30 c4all/templates/comments.html.py:99
+#: c4all/templates/comments.html:30 c4all/templates/comments.html.py:98
 msgid "Tools"
 msgstr "Verktyg"
 
@@ -72,27 +72,27 @@ msgstr "Verktyg"
 msgid "Go to editor interface"
 msgstr "Gå till redaktörsgränssnittet"
 
-#: c4all/templates/comments.html:62
+#: c4all/templates/comments.html:61
 msgid "My comment"
 msgstr "Min kommentar"
 
-#: c4all/templates/comments.html:64
+#: c4all/templates/comments.html:63
 msgid "Last comment"
 msgstr "Senaste kommentaren"
 
-#: c4all/templates/comments.html:77
+#: c4all/templates/comments.html:76
 msgid "at"
 msgstr "klockan"
 
-#: c4all/templates/comments.html:88
+#: c4all/templates/comments.html:87
 msgid "Listen to comment"
 msgstr "Lyssna på kommentaren"
 
-#: c4all/templates/comments.html:102
+#: c4all/templates/comments.html:101
 msgid "Publish comment"
 msgstr "Publicera kommentar"
 
-#: c4all/templates/comments.html:106
+#: c4all/templates/comments.html:105
 msgid "Unpublish comment"
 msgstr "Avpublicera kommentar"
 
@@ -230,7 +230,7 @@ msgstr "Välj bild"
 msgid "Name"
 msgstr "Namn"
 
-#: c4all/templates/footer.html:142 c4all/templates/footer.html.py:270
+#: c4all/templates/footer.html:142 c4all/templates/footer.html.py:271
 msgid "Send"
 msgstr "Skicka"
 
@@ -249,13 +249,13 @@ msgstr ""
 "Om du registrerar dig kan du behålla samma visningsnamn varje gång du "
 "kommenterar."
 
-#: c4all/templates/footer.html:179 c4all/templates/footer.html.py:220
-#: c4all/templates/custom_admin/users.html:44
+#: c4all/templates/footer.html:179 c4all/templates/footer.html.py:221
+#: c4all/templates/custom_admin/users.html:56
 #: c4all/templates/snippets/change_password_form.html:14
 msgid "E-mail"
 msgstr "E-post"
 
-#: c4all/templates/footer.html:185 c4all/templates/footer.html.py:226
+#: c4all/templates/footer.html:185 c4all/templates/footer.html.py:227
 #: c4all/templates/custom_admin/login.html:24
 msgid "Password"
 msgstr "Lösenord"
@@ -268,13 +268,13 @@ msgstr "Upprepa"
 msgid "Register and send comment"
 msgstr "Registrera dig och skicka kommentar"
 
-#: c4all/templates/footer.html:202 c4all/templates/footer.html.py:237
+#: c4all/templates/footer.html:202 c4all/templates/footer.html.py:238
 #: c4all/templates/custom_admin/comments.html:105
 #: c4all/templates/snippets/change_password_form.html:40
 msgid "Cancel"
 msgstr "Avbryt"
 
-#: c4all/templates/footer.html:214 c4all/templates/footer.html.py:233
+#: c4all/templates/footer.html:214 c4all/templates/footer.html.py:234
 msgid "Log in"
 msgstr "Logga in"
 
@@ -282,11 +282,11 @@ msgstr "Logga in"
 msgid "Or, Sign up"
 msgstr "Eller, registrera dig"
 
-#: c4all/templates/footer.html:255
+#: c4all/templates/footer.html:256
 msgid "You are logged in as"
 msgstr "Du är inloggad som"
 
-#: c4all/templates/footer.html:274 c4all/templates/custom_admin/base.html:55
+#: c4all/templates/footer.html:275 c4all/templates/custom_admin/base.html:55
 msgid "Logout"
 msgstr "Logga ut"
 
@@ -316,8 +316,8 @@ msgid "Articles"
 msgstr "Artiklar"
 
 #: c4all/templates/custom_admin/base.html:44
-#: c4all/templates/custom_admin/users.html:6
-#: c4all/templates/custom_admin/users.html:27
+#: c4all/templates/custom_admin/users.html:7
+#: c4all/templates/custom_admin/users.html:39
 msgid "Users"
 msgstr "Användare"
 
@@ -327,25 +327,25 @@ msgstr "Inloggad som"
 
 #: c4all/templates/custom_admin/comments.html:38
 #: c4all/templates/custom_admin/threads.html:59
-#: c4all/templates/custom_admin/users.html:47
+#: c4all/templates/custom_admin/users.html:59
 msgid "Comments"
 msgstr "Kommentarer"
 
 #: c4all/templates/custom_admin/comments.html:39
 #: c4all/templates/custom_admin/threads.html:30
-#: c4all/templates/custom_admin/users.html:28
+#: c4all/templates/custom_admin/users.html:40
 msgid "showing"
 msgstr "visar"
 
 #: c4all/templates/custom_admin/comments.html:39
 #: c4all/templates/custom_admin/threads.html:30
-#: c4all/templates/custom_admin/users.html:28
+#: c4all/templates/custom_admin/users.html:40
 #: c4all/templates/snippets/pagination.html:22
 msgid "of"
 msgstr "av"
 
 #: c4all/templates/custom_admin/comments.html:50
-#: c4all/templates/custom_admin/users.html:41
+#: c4all/templates/custom_admin/users.html:53
 msgid "User"
 msgstr "Användare"
 
@@ -362,11 +362,6 @@ msgstr "Skriven"
 #: c4all/templates/custom_admin/comments.html:80
 msgid "Publish"
 msgstr "Publicera"
-
-#: c4all/templates/custom_admin/comments.html:78
-#: c4all/templates/custom_admin/comments.html:81
-msgid "Unpublish"
-msgstr "Avpublicera"
 
 #: c4all/templates/custom_admin/comments.html:102
 msgid "Are you sure that you want to delete the comment by"
@@ -398,7 +393,7 @@ msgid "Article"
 msgstr "Artikel"
 
 #: c4all/templates/custom_admin/threads.html:62
-#: c4all/templates/custom_admin/users.html:50
+#: c4all/templates/custom_admin/users.html:62
 msgid "Date"
 msgstr "Datum"
 
@@ -410,14 +405,19 @@ msgstr "Senast kommenterad"
 msgid "View"
 msgstr "Visa"
 
-#: c4all/templates/custom_admin/users.html:62
+#: c4all/templates/custom_admin/users.html:75
 msgid "Modify"
 msgstr "Ändra"
 
-#: c4all/templates/custom_admin/users.html:66
-#: c4all/templates/custom_admin/users.html:69
+#: c4all/templates/custom_admin/users.html:80
+#: c4all/templates/custom_admin/users.html:83
 msgid "Reveal"
 msgstr "Visa"
+
+#: c4all/templates/custom_admin/users.html:81
+#: c4all/templates/custom_admin/users.html:84
+msgid "Hide"
+msgstr "Göm"
 
 #: c4all/templates/snippets/avatar_picker.html:3
 #: c4all/templates/snippets/avatar_picker.html:4
@@ -649,7 +649,7 @@ msgid "Current article"
 msgstr "Aktuell artikel"
 
 #: c4all/templates/snippets/sec_nav_comments.html:33
-#: c4all/templates/snippets/sec_nav_users.html:28
+#: c4all/templates/snippets/sec_nav_users.html:29
 msgid "Commit"
 msgstr "Utför"
 
@@ -669,53 +669,68 @@ msgstr "fel användarnamn eller lösenord"
 msgid "user not active"
 msgstr "användaren är inte aktiv"
 
-#: comments/forms.py:44
+#: comments/forms.py:45
 msgid "user hidden"
 msgstr "användaren är gömd"
 
-#: comments/forms.py:61
+#: comments/forms.py:62
 msgid "user not staff"
 msgstr "Användare är inte administratör"
 
-#: comments/forms.py:88
+#: comments/forms.py:66
+msgid ""
+"user is not admin for any site, log in as superuser to "
+"assign the user to a site"
+msgstr ""
+"Användaren är inte administratör på någon site, "
+"logga in som huvudadministratör för att " 
+"lägga till användaren till en site"
+
+#: comments/forms.py:94
 msgid "You have already registered"
 msgstr "Du har redan registrerat dig"
 
-#: comments/forms.py:94
+#: comments/forms.py:100
 msgid "Please enter your name"
 msgstr "Skriv in ditt namn"
 
-#: comments/forms.py:102
+#: comments/forms.py:108
 msgid "Passwords don't match"
 msgstr "Lösenordsfälten matchar inte varandra"
 
-#: comments/forms.py:165
+#: comments/forms.py:171
 msgid "poster name not provided"
 msgstr "namn på kommentator saknas"
 
-#: comments/forms.py:175
+#: comments/forms.py:181
 #, python-format
 msgid "site with domain %s does not exist"
 msgstr "sajt med domän %s finns inte"
 
-#: comments/forms.py:178
+#: comments/forms.py:184
 msgid "domain not provided"
 msgstr "domän saknas"
 
-#: comments/forms.py:185
+#: comments/forms.py:191
 msgid "thread not provided"
 msgstr "artikel saknas"
 
-#: comments/forms.py:192
+#: comments/forms.py:198 comments/views.py:172 comments/views.py:223
+#: comments/views.py:364 comments/views.py:405 comments/views.py:447
+#, python-format
+msgid "user is disabled on site with id %s"
+msgstr "användaren är inaktiverad på site med id %s"
+
+#: comments/forms.py:203
 #, python-format
 msgid "thread with id %s does not exist"
 msgstr "artikel med namn %s existerar inte"
 
-#: comments/forms.py:236
+#: comments/forms.py:245
 msgid "Enter a valid value"
 msgstr "Fyll i ett giltigt värde"
 
-#: comments/views.py:57 comments/views.py:108
+#: comments/views.py:57 comments/views.py:107
 msgid "Submitted data not valid."
 msgstr "Inskickad data är inte giltig."
 
@@ -727,33 +742,37 @@ msgstr "utloggad"
 msgid "invalid avatar_num number: "
 msgstr "ogiltigt avatar_num nummer:"
 
-#: comments/views.py:255 comments/views.py:295
+#: comments/views.py:130
+msgid "User doesn't have permissions to post to this site."
+msgstr "Användaren har inte rättigheter att posta på denna site."
+
+#: comments/views.py:277 comments/views.py:321
 msgid "User not staff"
 msgstr "Användare är inte administratör"
 
-#: comments/views.py:405 comments/views.py:494 comments/views.py:520
+#: comments/views.py:436 comments/views.py:536 comments/views.py:562
 #, python-format
 msgid "could not get comments, errors: %s"
 msgstr "kunde inte hämta kommentarer, fel: %s"
 
-#: comments/views.py:420
+#: comments/views.py:456
 msgid "thread url not provided"
 msgstr "artikel-url saknas"
 
-#: comments/views.py:504 comments/views.py:530
+#: comments/views.py:546 comments/views.py:572
 #, python-format
 msgid "domain with name %s does not exist"
 msgstr "domän med namn %s existerar inte"
 
-#: comments/views.py:558 comments/views.py:584
+#: comments/views.py:600 comments/views.py:627
 msgid "spell checking not supported"
 msgstr "stavningskontroll stöds ej"
 
-#: comments/views.py:565
+#: comments/views.py:607
 msgid "text not provided"
 msgstr "text saknas"
 
-#: comments/views.py:591
+#: comments/views.py:634
 msgid "word not provided"
 msgstr "ord saknas"
 

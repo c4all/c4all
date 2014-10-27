@@ -24,6 +24,7 @@
         <div class="filter-select">
             <form class="bulk-action-form" id="bulk-action-form" method="post" action="{% url 'c4all_admin:user_bulk_actions' %}">{% csrf_token %}
                     {{ bulk_action_form.action }}
+            <input type="hidden" id="site_id" name="site_id" value="{{ selected_site.id }}" />
                 <button class="button button-small bulk-action-submit">
                     <span class="button-label">{% trans "Commit" %}</span>
                 </button>

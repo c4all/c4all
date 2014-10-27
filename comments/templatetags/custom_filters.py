@@ -22,3 +22,10 @@ def visible_comments_count(value):
 @register.filter(name='comment_number_filter')
 def comment_number_filter(value, all):
     return value if all else value.filter(hidden=False)[:settings.WIDGET_COMMENTS_DEFAULT_NUMBER]
+
+
+@register.filter(name='hidden')
+def hidden(user, site_id):
+    if user.hidden.filter(id=site_id):
+        return True
+    return False
