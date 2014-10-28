@@ -51,6 +51,7 @@ class CustomUserAdmin(UserAdmin):
 
 class SiteAdmin(admin.ModelAdmin):
     form = SiteForm
+    filter_horizontal = ('admins',)
 
 
 admin.site.register(CustomUser, CustomUserAdmin)
