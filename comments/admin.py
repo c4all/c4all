@@ -20,7 +20,7 @@ class CustomUserAdmin(UserAdmin):
     fieldsets = (
         (
             None,
-            {"fields": ("email", "password", "full_name", "hidden")}
+            {"fields": ("email", "password", "full_name")}
         ),
         (
             "Permissions",
