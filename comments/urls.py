@@ -27,6 +27,7 @@ urlpatterns = patterns('',
     url(r'^footer', get_footer, name='get_footer'),
     url(r'^spellcheck/incorrect_words$', incorrect_words, name='incorrect_words'),
     url(r'^spellcheck/suggestions$', spellcheck_suggestions, name='spellcheck_suggestions'),
+    url(r'^comment_count$', comment_count, name='comment_count'),
 
     # test url
     url(r'^testpage$', login_required(TemplateView.as_view(template_name='usertest-example.html')), name="testpage"),

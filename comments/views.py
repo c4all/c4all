@@ -429,6 +429,32 @@ def dislike_thread(request, thread_id):
 @require_GET
 @csrf_exempt
 @json_response
+def comment_count(request):
+    domain = request.GET.get('domain', None)
+    thread_url = request.GET.get('thread_url', None)
+
+    try:
+        site = Site.objects.get(domain=domain)
+    except Site.DoesNotExist:
+        return HttpResponseBadRequest(
+            _('site with domain %s not found') % domain
+        )
+
+    try:
+        thread = site.threads.get(url=thread_url)
+    except Thread.DoesNotExist:
+        return HttpResponseBadRequest(
+            _('thread with url %s not found') % thread_url
+        )
+
+    comment_count = thread.comments.count()
+
+    return {"comment_count": comment_count}
+
+
+@require_GET
+@csrf_exempt
+@json_response
 def get_comments(request):
     form = GetRequestValidationForm(request.GET)
     if not form.is_valid():

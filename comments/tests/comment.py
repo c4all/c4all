@@ -343,6 +343,40 @@ class PostCommentEndpointTestCase(BaseTestCase):
         self.assertEqual(data['iframeId'], iframeId)
 
 
+class GetCommentsCountTestCase(BaseTestCase):
+    def setUp(self):
+        self.test_site = Site.objects.create(
+            domain='example.com',
+        )
+        self.test_thread = Thread.objects.create(
+            site=self.test_site,
+            url='test_url'
+        )
+        self.test_comment_1 = Comment.objects.create(
+            poster_name='Precise Pangolin',
+            thread=self.test_thread,
+            text='Pangolins are always precise!'
+        )
+
+        self.test_comment_2 = Comment.objects.create(
+            poster_name='Curious Benjamin',
+            thread=self.test_thread,
+            text='Growing in reverse!'
+        )
+
+        self.endpoint_url = reverse('comments:comment_count')
+
+    def test_comment_count_returns_correct_count(self):
+        r = self.client.get(self.endpoint_url, data={
+            'thread_url': self.test_thread.url,
+            'domain': self.test_thread.site.domain,
+        })
+
+        self.assertEqual(r.status_code, 200)
+
+        resp = json.loads(r.content)
+        self.assertEqual(2, resp['comment_count'])
+
 class GetCommentsEndpointTestCase(BaseTestCase):
 
     def setUp(self):
