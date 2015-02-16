@@ -133,6 +133,11 @@ def comment(request):
     posted = add_to_session_list(request, 'posted_comments', new_comment.id)
     comments = form.cleaned_data['thread'].comments.all()
 
+    if request.user.is_anonymous():
+        site_admin = False
+    else:
+        site_admin = bool(request.user.get_comments(new_comment.id))
+
     request.session['all_comments'] = True
 
     resp = render(
@@ -144,6 +149,7 @@ def comment(request):
             'last_posted_comment_id': posted[-1] if posted else None,
             'rs_customer_id': site.rs_customer_id,
             'all_comments': request.session.get('all_comments', False),
+            'site_admin': site_admin
         }
     )
     data = {
@@ -166,7 +172,12 @@ def like_comment(request, comment_id):
         data = {'placement': 'comments_container', 'content': str(e)}
         return HttpResponseNotFound(json.dumps(data))
 
-    if not request.user.is_anonymous():
+    if request.user.is_anonymous():
+        site_admin = False
+    else:
+        site_admin = bool(request.user.get_comments(comment_id))
+
+    if site_admin:
         if request.user.hidden.filter(id=comment.thread.site.id):
             return HttpResponseBadRequest(
                 _('user is disabled on site with id %s') % comment.thread.site.id
@@ -199,6 +210,7 @@ def like_comment(request, comment_id):
             'last_posted_comment_id': posted_comments[-1] if posted_comments else None,
             'rs_customer_id': site.rs_customer_id,
             'all_comments': request.session.get('all_comments', False),
+            'site_admin': site_admin,
         }
     )
     data = {'placement': 'comments_container', 'content': resp.content}
@@ -217,7 +229,12 @@ def dislike_comment(request, comment_id):
         data = {'placement': 'comments_container', 'content': str(e)}
         return HttpResponseNotFound(json.dumps(data))
 
-    if not request.user.is_anonymous():
+    if request.user.is_anonymous():
+        site_admin = False
+    else:
+        site_admin = bool(request.user.get_comments(comment_id))
+
+    if site_admin:
         if request.user.hidden.filter(id=comment.thread.site.id):
             return HttpResponseBadRequest(
                 _('user is disabled on site with id %s') % comment.thread.site.id
@@ -250,6 +267,7 @@ def dislike_comment(request, comment_id):
             'last_posted_comment_id': posted_comments[-1] if posted_comments else None,
             'rs_customer_id': site.rs_customer_id,
             'all_comments': request.session.get('all_comments', False),
+            'site_admin': site_admin,
         }
     )
     data = {'placement': 'comments_container', 'content': resp.content}
@@ -294,6 +312,7 @@ def hide_comment(request, comment_id):
             'last_posted_comment_id': posted_comments[-1] if posted_comments else None,
             'rs_customer_id': site.rs_customer_id,
             'all_comments': request.session.get('all_comments', False),
+            'site_admin': site_admin,
         }
     )
     data = {'placement': 'comments_container', 'content': resp.content}
@@ -338,6 +357,7 @@ def unhide_comment(request, comment_id):
             'last_posted_comment_id': posted_comments[-1] if posted_comments else None,
             'rs_customer_id': site.rs_customer_id,
             'all_comments': request.session.get('all_comments', False),
+            'site_admin': site_admin,
         }
     )
     data = {'placement': 'comments_container', 'content': resp.content}
