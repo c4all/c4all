@@ -5,26 +5,14 @@
 <div class="comment-list">
 
 
-  <h2 class="title">{% if site_admin %}{{ comments.count }}{% else %}{{ comments|visible_comments_count }}{% endif %} {% if comments.count == 1 %}{% trans "comment" %}{% else %}{% trans "comments" %}{% endif %}</h2>
+  <h2 class="title">
+      {{ comments|visible_comments_count }} {% if comments.count == 1 %}{% trans "comment" %}{% else %}{% trans "comments" %}{% endif %}
+  </h2>
 
 
+
+{% if site_admin %}
   <div class="action-list">
-      {% if not site_admin %}
-
-        {% if not all_comments and comments|visible_comments_count > WIDGET_COMMENTS_DEFAULT_NUMBER %}
-          <div class="user-action">
-            <a id="btn-viev-all-comments" href="#" role="button"><i class="icon icon-arrow-right"></i>{% trans "View all comments" %}</a>
-          </div>
-        {% endif %}
-      {% else %}
-        {% if not all_comments and comments.count > WIDGET_COMMENTS_DEFAULT_NUMBER %}
-          <div class="user-action">
-            <a id="btn-viev-all-comments" href="#" role="button"><i class="icon icon-arrow-right"></i>{% trans "View all comments" %}</a>
-          </div>
-        {% endif %}
-      {% endif %}
-
-        {% if site_admin %}
 
         <div class="editor-action">
           <span class="button-description">{% trans "Tools" %}</span>
@@ -34,11 +22,9 @@
             </button>
           </a>
         </div>
+  </div>
 
-        {% endif %}
-
-    </div>
-
+{% endif %}
 
   <ol>
     {% for comment in comments|comment_number_filter:all_comments %}
@@ -119,5 +105,24 @@
     {% endfor %}
 
   </ol>
+
+  {% if not site_admin %}
+    {% if not all_comments and comments|visible_comments_count > WIDGET_COMMENTS_DEFAULT_NUMBER %}
+      <div class="action-list-bottom">
+        <div class="user-action">
+            <a id="btn-viev-all-comments" href="#" role="button"><i class="icon icon-arrow-right"></i>{% trans "View all comments" %}</a>
+        </div>
+      </div>
+    {% endif %}
+  {% else %}
+    {% if not all_comments and comments.count > WIDGET_COMMENTS_DEFAULT_NUMBER %}
+      <div class="action-list-bottom">
+        <div class="user-action">
+            <a id="btn-viev-all-comments" href="#" role="button"><i class="icon icon-arrow-right"></i>{% trans "View all comments" %}</a>
+        </div>
+      </div>
+    {% endif %}
+  {% endif %}
+
 </div>
 <!-- /Comment list -->

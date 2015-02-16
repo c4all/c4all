@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-10-20 17:16+0200\n"
-"PO-Revision-Date: 2014-04-10 16:07+0100\n"
 "Last-Translator: \n"
+"POT-Creation-Date: 2015-02-16 15:49+0100\n"
+"PO-Revision-Date: 2015-02-16 09:50-0500\n"
 "Language-Team: \n"
 "Language: sv_SE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.6.4\n"
+"X-Generator: Poedit 1.7.4\n"
 
 #: admin/forms.py:23
 msgid "Show all dates"
@@ -47,7 +47,7 @@ msgstr "Avpublicera"
 msgid "articles"
 msgstr "artiklar"
 
-#: admin/views.py:162 c4all/templates/comments.html:8
+#: admin/views.py:162 c4all/templates/comments.html:9
 #: c4all/templates/custom_admin/threads.html:75
 msgid "comments"
 msgstr "kommentarer"
@@ -56,45 +56,45 @@ msgstr "kommentarer"
 msgid "users"
 msgstr "användare"
 
-#: c4all/templates/comments.html:8
+#: c4all/templates/comments.html:9
 msgid "comment"
 msgstr "kommentar"
 
-#: c4all/templates/comments.html:16 c4all/templates/comments.html.py:22
-msgid "View all comments"
-msgstr "Visa alla kommentarerna"
-
-#: c4all/templates/comments.html:30 c4all/templates/comments.html.py:98
+#: c4all/templates/comments.html:18 c4all/templates/comments.html.py:84
 msgid "Tools"
 msgstr "Verktyg"
 
-#: c4all/templates/comments.html:33
+#: c4all/templates/comments.html:21
 msgid "Go to editor interface"
 msgstr "Gå till redaktörsgränssnittet"
 
-#: c4all/templates/comments.html:61
+#: c4all/templates/comments.html:47
 msgid "My comment"
 msgstr "Min kommentar"
 
-#: c4all/templates/comments.html:63
+#: c4all/templates/comments.html:49
 msgid "Last comment"
 msgstr "Senaste kommentaren"
 
-#: c4all/templates/comments.html:76
+#: c4all/templates/comments.html:62
 msgid "at"
 msgstr "klockan"
 
-#: c4all/templates/comments.html:87
+#: c4all/templates/comments.html:73
 msgid "Listen to comment"
 msgstr "Lyssna på kommentaren"
 
-#: c4all/templates/comments.html:101
+#: c4all/templates/comments.html:87
 msgid "Publish comment"
 msgstr "Publicera kommentar"
 
-#: c4all/templates/comments.html:105
+#: c4all/templates/comments.html:91
 msgid "Unpublish comment"
 msgstr "Avpublicera kommentar"
+
+#: c4all/templates/comments.html:113 c4all/templates/comments.html.py:121
+msgid "View all comments"
+msgstr "Visa alla kommentarer"
 
 #: c4all/templates/dislike_snippet.html:5 c4all/templates/header.html:26
 msgid "Bad"
@@ -678,13 +678,13 @@ msgid "user not staff"
 msgstr "Användare är inte administratör"
 
 #: comments/forms.py:66
+#, fuzzy
 msgid ""
-"user is not admin for any site, log in as superuser to "
+"user is not admin for any site, log in as                     superuser to "
 "assign the user to a site"
 msgstr ""
-"Användaren är inte administratör på någon site, "
-"logga in som huvudadministratör för att " 
-"lägga till användaren till en site"
+"Användaren är inte administratör på någon site, logga in som "
+"huvudadministratör för att lägga till användaren till en site"
 
 #: comments/forms.py:94
 msgid "You have already registered"
@@ -715,8 +715,8 @@ msgstr "domän saknas"
 msgid "thread not provided"
 msgstr "artikel saknas"
 
-#: comments/forms.py:198 comments/views.py:172 comments/views.py:223
-#: comments/views.py:364 comments/views.py:405 comments/views.py:447
+#: comments/forms.py:198 comments/views.py:183 comments/views.py:240
+#: comments/views.py:384 comments/views.py:425 comments/views.py:493
 #, python-format
 msgid "user is disabled on site with id %s"
 msgstr "användaren är inaktiverad på site med id %s"
@@ -746,33 +746,43 @@ msgstr "ogiltigt avatar_num nummer:"
 msgid "User doesn't have permissions to post to this site."
 msgstr "Användaren har inte rättigheter att posta på denna site."
 
-#: comments/views.py:277 comments/views.py:321
+#: comments/views.py:295 comments/views.py:340
 msgid "User not staff"
 msgstr "Användare är inte administratör"
 
-#: comments/views.py:436 comments/views.py:536 comments/views.py:562
+#: comments/views.py:460
+#, python-format
+msgid "site with domain %s not found"
+msgstr "sajt med domän %s hittas inte"
+
+#: comments/views.py:467
+#, python-format
+msgid "thread with url %s not found"
+msgstr "artikel med namn %s hittas inte"
+
+#: comments/views.py:482 comments/views.py:582 comments/views.py:608
 #, python-format
 msgid "could not get comments, errors: %s"
 msgstr "kunde inte hämta kommentarer, fel: %s"
 
-#: comments/views.py:456
+#: comments/views.py:502
 msgid "thread url not provided"
 msgstr "artikel-url saknas"
 
-#: comments/views.py:546 comments/views.py:572
+#: comments/views.py:592 comments/views.py:618
 #, python-format
 msgid "domain with name %s does not exist"
 msgstr "domän med namn %s existerar inte"
 
-#: comments/views.py:600 comments/views.py:627
+#: comments/views.py:646 comments/views.py:673
 msgid "spell checking not supported"
 msgstr "stavningskontroll stöds ej"
 
-#: comments/views.py:607
+#: comments/views.py:653
 msgid "text not provided"
 msgstr "text saknas"
 
-#: comments/views.py:634
+#: comments/views.py:680
 msgid "word not provided"
 msgstr "ord saknas"
 

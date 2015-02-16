@@ -511,6 +511,52 @@
 #c4all-widget-container .comment-list .action-list a {
   color: #fff;
 }
+#c4all-widget-container .comment-list .action-list-bottom {
+  color: #fff;
+  background-color: #0066cc;
+  padding: 6px 12px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  zoom: 1;
+  clear: both;
+  margin-bottom: 30px;
+  /* View all comments */
+  /* Go to editor interface action */
+  margin-bottom: 0;
+  margin-top: 30px;
+}
+#c4all-widget-container .comment-list .action-list-bottom:after {
+  display: block;
+  visibility: hidden;
+  height: 0;
+  clear: both;
+  content: ".";
+}
+#c4all-widget-container .comment-list .action-list-bottom .user-action {
+  float: left;
+}
+#c4all-widget-container .comment-list .action-list-bottom .user-action a {
+  color: #fff;
+  padding: 2px;
+  display: inline-block;
+}
+#c4all-widget-container .comment-list .action-list-bottom .user-action a:hover,
+#c4all-widget-container .comment-list .action-list-bottom .user-action a:focus {
+  text-decoration: underline;
+}
+#c4all-widget-container .comment-list .action-list-bottom .editor-action {
+  float: right;
+}
+#c4all-widget-container .comment-list .action-list-bottom .editor-action .button-description {
+  margin-right: 10px;
+}
+#c4all-widget-container .comment-list .action-list-bottom a {
+  color: #fff;
+}
+#c4all-widget-container .comment-list ol {
+  clear: left;
+}
 #c4all-widget-container .comment {
   padding-left: 90px;
   margin-top: 18px;
