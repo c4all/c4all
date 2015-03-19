@@ -54,7 +54,15 @@ class BulkActionForm(forms.Form):
         ('delete', _('Delete')),
         ('hide', _('Unpublish'))
     ]
-    site_id = forms.CharField(required=True)
+    site_id = forms.CharField(required=True, widget=forms.HiddenInput())
+    action = forms.ChoiceField(choices=BULK_ACTION_CHOICES)
+
+
+class UnpublishedBulkActionForm(BulkActionForm):
+    BULK_ACTION_CHOICES = [
+        ('delete', _('Delete')),
+        ('unhide', _('Publish'))
+    ]
     action = forms.ChoiceField(choices=BULK_ACTION_CHOICES)
 
 
@@ -66,6 +74,12 @@ class UserBulkActionForm(BulkActionForm):
 
 
 class CommentBulkActionForm(BulkActionForm):
+    choices = forms.ModelMultipleChoiceField(
+        queryset=Comment.objects.all(),
+        widget=forms.CheckboxSelectMultiple,
+    )
+
+class UnpublishedCommentBulkActionForm(UnpublishedBulkActionForm):
     choices = forms.ModelMultipleChoiceField(
         queryset=Comment.objects.all(),
         widget=forms.CheckboxSelectMultiple,
