@@ -44,6 +44,11 @@
                                 <a href="{% url 'c4all_admin:get_users' %}">{% trans "Users" %}</a>
                             </li>
                         {% endblock %}
+                        {% block unpublished_comments_url %}
+                            <li class="item-button">
+                                <a href="{% url 'c4all_admin:unpublished_comments' %}">{% trans "Unpublished comments" %}</a>
+                            </li>
+                        {% endblock %}
                     </ul>
 
                     <ul class="secondary-nav">

@@ -3,6 +3,7 @@ from django.conf.urls import patterns, url
 from views import (threads, comments, hide_comment, unhide_comment,
     delete_comment, login_admin, logout_admin, users, user_bulk_actions,
     comment_bulk_actions, hide_user, unhide_user, delete_user, change_password,
+    unpublished_comments, unpublished_comment_bulk_actions
 )
 
 urlpatterns = patterns("",
@@ -11,6 +12,11 @@ urlpatterns = patterns("",
     url(r'^thread/(?P<thread_id>\d+)/comment_bulk_actions$',
         comment_bulk_actions,
         name="comment_bulk_actions"
+    ),
+    url(r'^site(?:/(?P<site_id>\d+))?/comment/unpublished$', unpublished_comments, name='unpublished_comments'),
+    url(r'^site(?:/(?P<site_id>\d+))?/unpublished_comment_bulk_actions$',
+        unpublished_comment_bulk_actions,
+        name="unpublished_comment_bulk_actions"
     ),
     url(r'^comment/(?P<comment_id>\d+)/hide$', hide_comment, name='hide_comment'),
     url(r'^comment/(?P<comment_id>\d+)/unhide$',

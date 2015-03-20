@@ -1,0 +1,30 @@
+{% load i18n %}
+
+<nav role="navigation" class="area-action page-action">
+
+        <!-- Filter tab -->
+        <div class="filter-links">
+        </div>
+        <!-- /Filter tab -->
+
+        <!-- Page info -->
+        <div class="page-info">
+            <p>{% trans "Current site" %}: <strong>{{ selected_site.domain }}</strong></p>
+        </div>
+        <!-- /Page info -->
+
+        <!-- Filter select -->
+        <div class="filter-select">
+            <form class="bulk-action-form" id="bulk-action-form" method="post" action="{% url 'c4all_admin:unpublished_comment_bulk_actions' selected_site.id %}">{% csrf_token %}
+                    {{ bulk_action_form.site_id }}
+                    {{ bulk_action_form.action }}
+                <button class="button button-small bulk-action-submit">
+                    <span class="button-label">{% trans "Commit" %}</span>
+                </button>
+            </form>
+        </div>
+        <!-- /Filter select -->
+
+        {% include "snippets/pagination.html" with objects=comments %}
+
+    </nav>

@@ -11,7 +11,9 @@ from comments.forms import StaffUserLoginForm
 from admin.decorators import admin_required, ajax_required
 from admin.paginator import paginate_data
 from admin.forms import (
-    IntervalSelectionForm, UserBulkActionForm, CommentBulkActionForm)
+    IntervalSelectionForm, UserBulkActionForm, CommentBulkActionForm,
+    UnpublishedCommentBulkActionForm
+)
 
 import json
 
@@ -148,7 +150,7 @@ def comments(request, thread_id):
 
     comments = paginate_data(request, comments_list)
 
-    bulk_action_form = CommentBulkActionForm()
+    bulk_action_form = CommentBulkActionForm(initial={'site_id':thread.site.id})
 
     return render(
         request,
@@ -159,6 +161,40 @@ def comments(request, thread_id):
             "hidden_comments_count": hidden_comments_count,
             "selected_site": thread.site,
             "bulk_action_form": bulk_action_form,
+            "pagination_objects_name": _("comments"),
+        }
+    )
+
+
+@admin_required
+def unpublished_comments(request, site_id=None):
+    site = None
+    sites = request.user.get_sites()
+
+    if site_id:
+        site = get_object_or_404(sites, id=site_id)
+    elif request.session.get('last_site_id'):
+        site_id = request.session['last_site_id']
+        site = get_object_or_404(sites, id=site_id)
+    else:
+        site = sites[0] if sites.exists() else None
+
+    comments_list = Comment.objects.filter(hidden=True, thread__site__id=site_id)
+    hidden_comments_count = comments_list.count()
+
+    comments = paginate_data(request, comments_list)
+
+    bulk_action_form = UnpublishedCommentBulkActionForm(initial={'site_id':site.id})
+
+    return render(
+        request,
+        "custom_admin/unpublished_comments.html",
+        {
+            "sites": sites,
+            "selected_site": site,
+            "bulk_action_form": bulk_action_form,
+            "comments": comments,
+            "hidden_comments_count": hidden_comments_count,
             "pagination_objects_name": _("comments"),
         }
     )
@@ -288,6 +324,24 @@ def comment_bulk_actions(request, thread_id):
                 id__in=comments).update(hidden=True)
 
     return redirect("c4all_admin:get_thread_comments", thread_id)
+
+
+@admin_required
+@require_POST
+def unpublished_comment_bulk_actions(request, site_id):
+    form = UnpublishedCommentBulkActionForm(request.POST or None)
+
+    if form.is_valid():
+        cd = form.cleaned_data
+        comments = cd['choices'].filter(id__in=request.user.get_comments())
+        if cd['action'] == 'delete':
+            Comment.objects.bulk_delete(comments)
+            pass
+        if cd['action'] == 'unhide':
+            Comment.objects.filter(
+                id__in=comments).update(hidden=False)
+
+    return redirect("c4all_admin:unpublished_comments", site_id)
 
 
 @admin_required

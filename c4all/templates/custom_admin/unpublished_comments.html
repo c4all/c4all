@@ -1,0 +1,160 @@
+{% extends 'custom_admin/base.html' %}
+{% load i18n %}
+
+{% if selected_site %}
+    {% block selected_site_title %}
+        {{ selected_site.domain }}
+    {% endblock %}
+{% endif %}
+
+
+{% block unpublished_comments_url %}
+    <li class="item-button is-active">
+        <a href="{% url 'c4all_admin:unpublished_comments' %}">{% trans "Unpublished comments" %}</a>
+    </li>
+{% endblock %}
+
+{% block sec_nav %}
+
+    {% include "snippets/sec_nav_unpublished_comments.html" %}
+
+{% endblock %}
+
+{% block third_nav %}
+
+    {% include "snippets/sec_nav_unpublished_comments.html" %}
+
+{% endblock %}
+
+
+{% block page_title %}
+    <div class="page-title">
+        <h1>{% trans "Unpublished Comments" %}</h1>
+        <p>({% trans "showing" %} {{ comments.start_index }}–{{ comments.end_index }} {% trans "of" %} {{ comments.paginator.count }})</p>
+    </div>
+{% endblock %}
+
+
+{% block filter_form %}
+    {% include "snippets/filter_form.html" with selected_option=selected_site objects=sites options_url_name="c4all_admin:unpublished_comments" %}
+{% endblock %}
+
+{% block content %}
+
+            <!-- Item listing -->
+            <div class="item-listing comment-listing">
+
+                <div class="item item-header">
+                    <div class="col-user">
+                        <p>{% trans "User" %}</p>
+                    </div>
+                    <div class="col-comment">
+                        <p><i class="icon icon-comment" aria-hidden="true"></i>{% trans "Comment" context "entity"  %}</p>
+                    </div>
+                </div>
+
+                {% for comment in comments %}
+                <!-- Item -->
+                <div class={% if forloop.counter|divisibleby:2 %}"item"{% else %}"item odd"{% endif %}>
+                    <div class="col-user has-checkbox">
+                        <label class="name">{% if comment.user %}{{ comment.user.get_full_name }}{% else %}{{ comment.poster_name }}{% endif %}
+                            <input class="bulk-action-choices-checkbox" id="id_choices_{{ forloop.counter0 }}" type="checkbox" value="{{ comment.id }}" name="choices">
+                        </label>
+                        <p><a href="#">{{ comment.user.email }}</a></p>
+                        {% if comment.ip_address != "None" %}
+                            <p>{{ comment.ip_address }}</p>
+                        {% endif %}
+                    </div>
+                    <div class="col-comment">
+                        <p>{% trans "Written" %} {{ comment.created|date:"Y-m-d G:i:s" }}</p>
+                        {% autoescape off %}
+                            <p>{{ comment.text }}</p>
+                        {% endautoescape %}
+                        <ul class="action-list">
+                            <li>
+                                {% if comment.hidden %}
+                                    <a href="" class='btn-hide unhidden' data-url={% url "c4all_admin:unhide_comment" comment.id %}>{% trans "Publish" %}</a>
+                                    <a href="" class='btn-hide hidden' data-url={% url "c4all_admin:hide_comment" comment.id %} hidden>{% trans "Unpublish" %}</a>
+                                {% else %}
+                                    <a href="" class='btn-hide unhidden' data-url={% url "c4all_admin:unhide_comment" comment.id %} hidden>{% trans "Publish" %}</a>
+                                    <a href="" class='btn-hide hidden' data-url={% url "c4all_admin:hide_comment" comment.id %}>{% trans "Unpublish" %}</a>
+                                {% endif %}
+                            </li>
+                            <li class="item-delete" data-comment-id={{ comment.id }} data-comment-poster-name={{ comment.poster_name }}><a href="">{% trans "Delete" %}</a></li>
+                        </ul>
+                    </div>
+                </div>
+                {% endfor %}
+
+            </div>
+            <!-- /Item listing -->
+
+{% endblock %}
+
+
+{% block modal %}
+
+    <div class="modal-overlay" id="comments-modal-overlay"></div>
+
+    <div class="modal-container" id="comments-modal-container">
+        <div class="modal-content">
+            <p>{% trans "Are you sure that you want to delete the comment by" %} <strong><span id="modal-poster-name"></span></strong>?</p>
+            <div class="action">
+                <a id="delete-comment-anchor" href="#" class="button flat">{% trans "Delete comment" %}</a>
+                <a id="cancel-modal-btn" href="#" class="button naked">{% trans "Cancel" %}</a>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+
+{% block js %}
+
+
+<script type="text/javascript">
+
+    $(".bulk-action-submit").on('click', function(){
+        var checked = $(".bulk-action-choices-checkbox:checked")
+        var form = $(this).context.form;
+
+        for (var i=0; i < checked.length; i++){
+            var el = checked[i];
+            el.type = "hidden";
+            form.appendChild(el)
+        }
+
+        form.submit()
+
+        return false;
+    });
+
+    $('.item-delete').on('click', function(){
+        openModal();
+        url = "/admin/comment/" + $(this).data("comment-id") + "/delete";
+        var poster_name = $(this).data("comment-poster-name");
+        $("#delete-comment-anchor").attr("href", url);
+        $("#modal-poster-name").html(poster_name)
+        return false;
+    })
+
+    $('#cancel-modal-btn').on('click', function(){
+        closeModal();
+        return false;
+    });
+
+    function closeModal(){
+        $("#comments-modal-overlay").hide();
+        $("#comments-modal-container").hide();
+    }
+
+    function openModal(){
+        $("#comments-modal-overlay").show();
+        $("#comments-modal-container").show();
+    }
+
+</script>
+
+{% include "snippets/hide_unhide_js.html" only %}
+
+{% endblock %}
