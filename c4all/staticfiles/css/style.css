@@ -1,6 +1,14 @@
 /* ==================================================
     Mixins
 ===================================================== */
+#c4all-widget-container *,
+#c4all-widget-container a,
+#c4all-widget-container a:link {
+  -moz-transition: none;
+  -webkit-transition: none;
+  -o-transition: color 0 ease-in;
+  transition: none;
+}
 #c4all-widget-container .comment-icon {
   display: inline-block;
   width: 40px;
