@@ -467,7 +467,7 @@ def comment_count(request):
             _('thread with url %s not found') % thread_url
         )
 
-    comment_count = thread.comments.count()
+    comment_count = thread.comments.filter(hidden=False).count()
 
     return {"comment_count": comment_count}
 
