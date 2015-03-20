@@ -364,6 +364,13 @@ class GetCommentsCountTestCase(BaseTestCase):
             text='Growing in reverse!'
         )
 
+        self.test_comment_3 = Comment.objects.create(
+            poster_name='Slow Loris',
+            thread=self.test_thread,
+            text='Real life Slowpoke!',
+            hidden=True
+        )
+
         self.endpoint_url = reverse('comments:comment_count')
 
     def test_comment_count_returns_correct_count(self):
