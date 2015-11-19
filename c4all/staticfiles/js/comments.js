@@ -5,6 +5,7 @@
     var scripts = document.getElementsByTagName('script');
     var C4ALL_SERVER = 'http://c4all.devsrv.net';
     var THREAD;
+    var COMMENTS_ENABLED = true;
     var IP_ADDRESS = '';
     var SPELLCHECK_ENABLED = false;
     var MIN_PARENT_WIDTH = 600;
@@ -174,15 +175,17 @@
 
         var dfrs = [];
 
-        if (!part) {
-            dfrs.push(doGet('header', params));
-            dfrs.push(doGet('comments', params));
-            dfrs.push(doGet('footer', params));
-        } else {
-            dfrs.push(doGet(part, params));
+        if(COMMENTS_ENABLED === true) {
+            if (!part) {
+                dfrs.push(doGet('header', params));
+                dfrs.push(doGet('comments', params));
+                dfrs.push(doGet('footer', params));
+            } else {
+                dfrs.push(doGet(part, params));
+            }
+            return $.when.apply($.when, dfrs);
         }
-
-        return $.when.apply($.when, dfrs);
+        return undefined;
     }
 
 
@@ -629,6 +632,7 @@
         var url = C4ALL_SERVER + '/thread_info';
         return makeCrossDomainGet(url, params).then(function(data) {
             THREAD = data.thread_id;
+            COMMENTS_ENABLED = data.comments_enabled;
             SPELLCHECK_ENABLED = data.spellcheck_enabled;
             SPELLCHECK_LOCALIZATION = data.spellcheck_localization;
             return data;
@@ -712,6 +716,7 @@
     }
 
     function main() {
+        fetchThreadId();
         $('<link>', {
             rel: 'stylesheet',
             type: 'text/css',

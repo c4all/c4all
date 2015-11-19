@@ -568,6 +568,7 @@ def thread_info(request):
 
     return {
         "thread_id": thread.id,
+        "comments_enabled": thread.allow_comments,
         "spellcheck_enabled": settings.SPELLCHECK_ENABLED,
         "spellcheck_localization": SPELLCHECK_LOCALIZATION
     }

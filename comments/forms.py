@@ -190,6 +190,9 @@ class PostCommentForm(forms.ModelForm):
         if not thread or not domain:
             raise forms.ValidationError(_("thread not provided"))
 
+        if not thread.allow_comments:
+            raise forms.ValidationError(_("comments not allowed"))
+
         try:
             site = Site.objects.get(domain=domain)
             if not self.user.is_anonymous():
