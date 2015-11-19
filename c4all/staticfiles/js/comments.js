@@ -175,15 +175,17 @@
 
         var dfrs = [];
 
-        if (!part) {
-            dfrs.push(doGet('header', params));
-            dfrs.push(doGet('comments', params));
-            dfrs.push(doGet('footer', params));
-        } else {
-            dfrs.push(doGet(part, params));
+        if(COMMENTS_ENABLED === true) {
+            if (!part) {
+                dfrs.push(doGet('header', params));
+                dfrs.push(doGet('comments', params));
+                dfrs.push(doGet('footer', params));
+            } else {
+                dfrs.push(doGet(part, params));
+            }
+            return $.when.apply($.when, dfrs);
         }
-
-        return $.when.apply($.when, dfrs);
+        return undefined;
     }
 
 
@@ -714,6 +716,7 @@
     }
 
     function main() {
+        fetchThreadId();
         $('<link>', {
             rel: 'stylesheet',
             type: 'text/css',
