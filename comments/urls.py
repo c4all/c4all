@@ -1,15 +1,11 @@
-try:
-    from django.conf.urls import *
-except ImportError:  # django < 1.4
-    from django.conf.urls.defaults import *
-
+from django.conf.urls import *
 from django.views.generic import TemplateView
 from django.contrib.auth.decorators import login_required
 
 from .views import *
 
 
-urlpatterns = patterns('',
+urlpatterns = [
     url(r'^register$', register_user, name='register_user'),
     url(r'^login$', login_user, name='login_user'),
     url(r'^logout$', logout_user, name='logout_user'),
@@ -32,4 +28,4 @@ urlpatterns = patterns('',
     # test url
     url(r'^testpage$', login_required(TemplateView.as_view(template_name='usertest-example.html')), name="testpage"),
 
-)
+]

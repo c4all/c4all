@@ -109,7 +109,7 @@ class AdminUsertestCases(TestCase):
         self.assertEqual(Comment.objects.filter(user=self.admin).count(), 1)
 
     def test_user_bulk_actions_hide_successfully_hides_users(self):
-        users = User.objects.filter(hidden=True)
+        users = User.objects.filter(hidden__isnull=False)
         self.assertEqual(users.count(), 1)
 
         resp = self.client.post(
@@ -122,7 +122,7 @@ class AdminUsertestCases(TestCase):
         )
 
         self.assertEqual(resp.status_code, 302)
-        users = User.objects.filter(hidden=True)
+        users = User.objects.filter(hidden__isnull=False)
         self.assertEqual(users.count(), 2)
         self.assertTrue(self.user in users)
 
@@ -157,7 +157,7 @@ class AdminUsertestCases(TestCase):
         )
 
         self.assertEqual(resp.status_code, 302)
-        users = User.objects.filter(hidden=True)
+        users = User.objects.filter(hidden__isnull=False)
         self.assertEqual(users.count(), 1)
         self.assertTrue(self.user_hidden in users)
 

@@ -91,13 +91,8 @@ def collectstatic():
     manage('collectstatic --noinput')
 
 
-def syncdb():
-    """Execute initial syncdb"""
-    manage('syncdb')
-
-
 def migrate():
-    """Execute any pending South migrations on the server."""
+    """Execute any pending migrations on the server."""
     manage('migrate')
 
 
@@ -122,7 +117,6 @@ def update():
     """
     install_requirements()
     collectstatic()
-    syncdb()
     migrate()
 
 

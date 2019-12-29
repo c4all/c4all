@@ -127,6 +127,7 @@ class CustomUserChangeForm(forms.ModelForm):
     """
     class Meta:
         model = UserModel
+        exclude = ()
 
     password = ReadOnlyPasswordHashField(
         help_text=(
@@ -237,6 +238,7 @@ class SiteForm(forms.ModelForm):
 
     class Meta:
         model = Site
+        exclude = ()
 
     def clean_domain(self):
         p = re.compile(settings.DOMAIN_URL_PATTERN)

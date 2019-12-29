@@ -3,9 +3,8 @@ from django.db.models import Q
 from django.contrib.auth.models import (
     BaseUserManager, AbstractBaseUser, PermissionsMixin
 )
-
-from jsonfield import JSONField
-
+from django.contrib.postgres.fields import JSONField
+from django.utils import timezone
 from urlparse import urljoin
 
 
@@ -61,8 +60,8 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     objects = CustomUserManager()
     avatar_num = models.IntegerField(default=6)  # green diamond
     hidden = models.ManyToManyField(
-        'Site', null=True, blank=True, related_name='hidden_users')
-    created = models.DateTimeField(auto_now_add=True)
+        'Site', blank=True, related_name='hidden_users')
+    created = models.DateTimeField(default=timezone.now)
 
     def get_full_name(self):
         return self.full_name if self.full_name else self.email
@@ -171,7 +170,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 class Site(models.Model):
     domain = models.CharField(null=False, max_length=255)
     admins = models.ManyToManyField(
-        CustomUser, null=True, blank=True, limit_choices_to={
+        CustomUser, blank=True, limit_choices_to={
             'is_superuser': False,
             'is_staff': True
         })
@@ -188,20 +187,18 @@ class Thread(models.Model):
 
     site = models.ForeignKey(Site, related_name='threads')
     url = models.CharField(null=False, max_length=255)
-    created = models.DateTimeField(editable=False, auto_now_add=True)
+    created = models.DateTimeField(editable=False, default=timezone.now)
     allow_comments = models.BooleanField(default=True)
     liked_by_count = models.IntegerField(default=0)
     disliked_by_count = models.IntegerField(default=0)
     liked_by = models.ManyToManyField(
         CustomUser,
         related_name='liked_threads',
-        null=True,
         blank=True
     )
     disliked_by = models.ManyToManyField(
         CustomUser,
         related_name='disliked_threads',
-        null=True,
         blank=True
     )
     titles = JSONField(default={
@@ -294,19 +291,17 @@ class Comment(models.Model):
     poster_name = models.CharField(max_length=100)
     thread = models.ForeignKey(Thread, related_name='comments')
     text = models.TextField()
-    created = models.DateTimeField(editable=False, auto_now_add=True)
+    created = models.DateTimeField(editable=False, default=timezone.now)
     liked_by_count = models.IntegerField(default=0)
     disliked_by_count = models.IntegerField(default=0)
     liked_by = models.ManyToManyField(
         CustomUser,
         related_name='liked_comments',
-        null=True,
         blank=True
     )
     disliked_by = models.ManyToManyField(
         CustomUser,
         related_name='disliked_comments',
-        null=True,
         blank=True
     )
 

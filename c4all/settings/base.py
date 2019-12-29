@@ -110,12 +110,29 @@ def ensure_secret_key_file():
 ensure_secret_key_file()
 from secret import SECRET_KEY  # noqa
 
-# List of callables that know how to import templates from various sources.
-TEMPLATE_LOADERS = (
-    'django.template.loaders.filesystem.Loader',
-    'django.template.loaders.app_directories.Loader',
-    # 'django.template.loaders.eggs.Loader',
-)
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [
+            ABS_PATH('templates'),
+        ],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                "django.contrib.auth.context_processors.auth",
+                "django.template.context_processors.debug",
+                "django.template.context_processors.i18n",
+                "django.template.context_processors.media",
+                "django.template.context_processors.static",
+                "django.template.context_processors.tz",
+                "django.contrib.messages.context_processors.messages",
+                'django.template.context_processors.request',
+                "comments.context_processors.base_url"
+            ],
+            'debug': (ENV_SETTING('TEMPLATE_DEBUG', 'true') == 'true'),
+        },
+    },
+]
 
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
@@ -127,13 +144,6 @@ MIDDLEWARE_CLASSES = (
 
 ROOT_URLCONF = PROJECT_NAME + '.urls'
 
-TEMPLATE_DIRS = (
-    # Put strings here, like "/home/html/django_templates" or
-    # "C:/www/django/templates". Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
-    ABS_PATH('templates'),
-)
-
 INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -144,9 +154,8 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
-    'south',
-    'comments',
-    'admin',
+    'c4all.apps.C4allCommentsConfig',
+    'c4all.apps.C4allAdminConfig',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -186,21 +195,7 @@ LOGGING = {
     }
 }
 
-AUTH_USER_MODEL = "comments.CustomUser"
-
-# Need context_processors.request for accessing sessions vars in template
-# for fake comments
-TEMPLATE_CONTEXT_PROCESSORS = (
-    "django.contrib.auth.context_processors.auth",
-    "django.core.context_processors.debug",
-    "django.core.context_processors.i18n",
-    "django.core.context_processors.media",
-    "django.core.context_processors.static",
-    "django.core.context_processors.tz",
-    "django.contrib.messages.context_processors.messages",
-    'django.core.context_processors.request',
-    "comments.context_processors.base_url"
-)
+AUTH_USER_MODEL = "c4all_comments.CustomUser"
 
 LOGIN_URL = "/admin/"
 

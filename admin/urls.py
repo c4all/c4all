@@ -1,4 +1,4 @@
-from django.conf.urls import patterns, url
+from django.conf.urls import url
 
 from views import (threads, comments, hide_comment, unhide_comment,
     delete_comment, login_admin, logout_admin, users, user_bulk_actions,
@@ -6,7 +6,7 @@ from views import (threads, comments, hide_comment, unhide_comment,
     unpublished_comments, unpublished_comment_bulk_actions
 )
 
-urlpatterns = patterns("",
+urlpatterns = [
     url(r'^site(?:/(?P<site_id>\d+))?/threads$', threads, name='get_threads'),
     url(r'^thread/(?P<thread_id>\d+)/comments$', comments, name='get_thread_comments'),
     url(r'^thread/(?P<thread_id>\d+)/comment_bulk_actions$',
@@ -41,4 +41,4 @@ urlpatterns = patterns("",
         change_password,
         name="change_password"
     ),
-)
+]

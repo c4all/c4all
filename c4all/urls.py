@@ -1,11 +1,11 @@
-from django.conf.urls import patterns, include, url
+from django.conf.urls import include, url
 
 from django.contrib import admin as djadmin
 djadmin.autodiscover()
 
 from comments import urls as comments_urls
 
-urlpatterns = patterns('',
+urlpatterns = [
     # Examples:
     # url(r'^$', 'myapp.views.home', name='home'),
     # url(r'^myapp/', include('myapp.urls')),
@@ -16,5 +16,4 @@ urlpatterns = patterns('',
     url(r'^djadmin/', include(djadmin.site.urls)),
     url(r'^admin/', include('admin.urls', namespace='c4all_admin')),
     url(r'', include(comments_urls, namespace='comments'))
-
-)
+]
