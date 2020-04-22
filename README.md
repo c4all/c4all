@@ -15,7 +15,7 @@ Comments for all is an easy to use comment field. Read more about it on the [web
     make dev-setup
 
     # run c4all service
-    python manage.py runserver_plus
+    python manage.py runserver
 
 
 ### The production setup
@@ -100,12 +100,8 @@ where comments are displayed is the same as in the ReadSpeaker admin interface.
 
 The development environment by default includes:
 
-* South for database migrations (both development and production use it)
-* Django Debug Toolbar for displaying extra information about view execution
 * SQLite database (dev.db in the project root directory)
-* Integrated view debugger making it easy to debug crashes directly from the browser (Werkzeug and django-extension's runserver_plus)
 * Full SQL statement logging
-* Beefed-up Django shell with model auto-loading and IPython REPL
 * Flake8 source code checker (style, passive code analysis)
 * Console E-mail backend set by default in dev for simple E-mail send testing
 * Automated testing all set-up with nose, optionally creating test coverage reports, and using the in-memory SQLite database (and disabled South) to speed up test execution
@@ -283,8 +279,8 @@ Useful commands:
     repository, creates a virtual environment, initialises the database and
     runs the tests)
   * deploy - deploy a new version of project on the server using git pull
-  * collecstatic, syncdb, migrate, runserver - run manage.py command
-  * update - combines collecstatic, syncdb, migrate
+  * collecstatic, migrate, runserver - run manage.py command
+  * update - combines collecstatic, migrate
   * test - run manage.py test with the test settings enabled
 
 For all the commands, run 'fab -l' or look at the source.

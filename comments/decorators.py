@@ -18,9 +18,9 @@ def json_response(func):
             return objects
 
         data = json.dumps(objects)
-        if 'callback' in request.REQUEST:
+        if 'callback' in request:
             # a jsonp response!
-            data = '%s(%s);' % (request.REQUEST['callback'], data)
+            data = '%s(%s);' % (request['callback'], data)
             return HttpResponse(data, "text/javascript")
 
         return HttpResponse(data, "application/json")

@@ -2,18 +2,10 @@
 # Nose test runner and disables South for the tests
 
 from .base import *
+import dj_database_url
 
-# Use in-memory SQLIte3 database for faster tests
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': ':memory:',
-    }
-}
-
-# No need to use South in testing
-SOUTH_TESTS_MIGRATE = False
-SKIP_SOUTH_TESTS = True
+DATABASES = {'default': dj_database_url.config(
+    default='postgres://postgres@localhost:5432/c4all')}
 
 # Disable cache
 CACHES = {
